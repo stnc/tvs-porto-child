@@ -240,27 +240,9 @@ if ( isset( $porto_settings['post-title-style'] ) && 'without-icon' == $porto_se
 
 			<div class="portfolio-info">
 				<ul>
-					<?php if ( isset( $porto_settings['portfolio-metas'] ) && in_array( 'like', $porto_settings['portfolio-metas'] ) ) : ?>
-						<li>
-							<?php //echo porto_portfolio_like(); ?>
-						</li>
-						<?php
-					endif;
-					if ( isset( $porto_settings['portfolio-metas'] ) && in_array( 'date', $porto_settings['portfolio-metas'] ) ) :
-						?>
-						<li>
-							<!-- <i class="far fa-calendar-alt"></i> <?php //echo get_the_date(); ?> -->
-						</li>
-						<?php
-					endif;
-					$cat_list = get_the_term_list( $post->ID, 'portfolio_cat', '', ', ', '' );
-					if ( isset( $porto_settings['portfolio-metas'] ) && in_array( 'cats', $porto_settings['portfolio-metas'] ) && $cat_list ) :
-						?>
-						<li>
-							<i class="fas fa-tags"></i> <?php echo porto_filter_output( $cat_list ); ?>
-						</li>
-					<?php endif; ?>
-					<?php
+			
+				
+				<?php
 					if ( function_exists( 'Post_Views_Counter' ) && 'manual' == Post_Views_Counter()->options['display']['position'] && in_array( 'portfolio', (array) Post_Views_Counter()->options['general']['post_types_count'] ) ) {
 						$post_count = do_shortcode( '[post-views]' );
 						if ( $post_count ) :
@@ -298,7 +280,7 @@ if ( isset( $porto_settings['post-title-style'] ) && 'without-icon' == $porto_se
 				</div>
 			<?php endif; ?>
 
-			<?php porto_get_template_part( 'views/portfolios/meta' ); ?>
+			<?php //porto_get_template_part( 'views/portfolios/meta' ); ?>
 
 			<?php if ( $porto_settings['share-enable'] && 'no' !== $share && ( 'yes' === $share || ( 'yes' !== $share && ! empty( $porto_settings['portfolio-share'] ) ) ) ) : ?>
 				<hr>

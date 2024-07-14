@@ -27,11 +27,14 @@ if ( $builder_id ) {
 		if ( have_posts() ) :
 			the_post();
 			global $post;
-			$portfolio_layout = get_post_meta( $post->ID, 'portfolio_layout', true );
-			$portfolio_layout = ( 'default' == $portfolio_layout || ! $portfolio_layout ) ? ( isset( $porto_settings['portfolio-content-layout'] ) ? $porto_settings['portfolio-content-layout'] : 'medium' ) : $portfolio_layout;
+			//$portfolio_layout = get_post_meta( $post->ID, 'portfolio_layout', true );
+			//$portfolio_layout = ( 'default' == $portfolio_layout || ! $portfolio_layout ) ? ( isset( $porto_settings['portfolio-content-layout'] ) ? $porto_settings['portfolio-content-layout'] : 'medium' ) : $portfolio_layout;
 			?>
 
-			<?php get_template_part( 'content', 'speaker-' . sanitize_file_name( $portfolio_layout ) ); ?>
+			<?php 
+			// get_template_part( 'content', 'speaker-' . sanitize_file_name( $portfolio_layout ) ); 
+			get_template_part( 'content', 'speaker-medium'  ); 
+			?>
 
 		<?php endif; ?>
 	</div>
