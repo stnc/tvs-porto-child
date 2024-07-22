@@ -45,12 +45,12 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     <?php
                     $speaker_list_db = get_post_meta($debateID, 'tvsDebateMB_speakerList', true);
 
-                    $json_speaker_list = json_decode($speaker_list_db, true);
+                    $speaker_list_json = json_decode($speaker_list_db, true);
                     // echo "<pre>";
-// print_r($json_speaker_list);
-                    if ($json_speaker_list):
+// print_r($speaker_list_json);
+                    if ($speaker_list_json):
                       echo '<ul>';
-                      foreach ($json_speaker_list as $key => $json_speaker) {
+                      foreach ($speaker_list_json as $key => $json_speaker) {
 
                         if (1 == $json_speaker["opinions"])
                           $opinions = "FOR";
@@ -91,7 +91,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
                     $json_video_list = json_decode($video_list_db, true);
                     // echo "<pre>";
-// print_r($json_speaker_list);
+// print_r($speaker_list_json);
                     if ($json_video_list):
                       echo '<ul>';
                       foreach ($json_video_list as $key => $video) {
@@ -140,12 +140,12 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                   <?php
                   $speaker_list_db = get_post_meta($debateID, 'tvsDebateMB_speakerList', true);
 
-                  $json_speaker_list = json_decode($speaker_list_db, true);
+                  $speaker_list_json = json_decode($speaker_list_db, true);
                   // echo "<pre>";
-// print_r($json_speaker_list);
-                  if ($json_speaker_list):
+// print_r($speaker_list_json);
+                  if ($speaker_list_json):
                     echo '<ul>';
-                    foreach ($json_speaker_list as $key => $json_speaker) {
+                    foreach ($speaker_list_json as $key => $json_speaker) {
 
                       if (1 == $json_speaker["opinions"])
                         $opinions = "FOR";
@@ -167,7 +167,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
                   $json_video_list = json_decode($video_list_db, true);
                   // echo "<pre>";
-// print_r($json_speaker_list);
+// print_r($speaker_list_json);
                   if ($json_video_list):
                     echo '<ul>';
                     foreach ($json_video_list as $key => $video) {

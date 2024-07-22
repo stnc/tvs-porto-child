@@ -66,9 +66,7 @@ require_once ("functions-tvs.php");
 
 								$post_meta .= '<ul class="buttons">';
 								$post_meta .= '<li><a  href="' . get_permalink() . '">Details</a></li>';
-								$post_meta .= '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
-								$post_meta .= '<li><a href="#" onClick="alert(\'Coming Soon\')">Speakers</a></li>';
-								$post_meta .= '<li><a  href="' . get_permalink($opinionPage) . '">Opinion poll</a></li>';
+								$post_meta .= tvs_frontpage_metabox(get_the_ID());
 								$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 								$post_meta .= '</ul>';
 								$post_meta .= '</div>';

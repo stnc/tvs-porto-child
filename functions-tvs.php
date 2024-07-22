@@ -155,12 +155,12 @@ function tvs_kama_paginate_links_data(array $args): array
 function tvs_speacial_meta()
 {
 	$speaker_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_speakerList', true);
-	$json_speaker_list = json_decode($speaker_list_db, true);
+	$speaker_list_json = json_decode($speaker_list_db, true);
 	// echo "<pre>";
-	// print_r($json_speaker_list);
-	if ($json_speaker_list):
+	// print_r($speaker_list_json);
+	if ($speaker_list_json["speaker"]!=0):
 		echo '<ul style="border:1px solid black">';
-		foreach ($json_speaker_list as $key => $json_speaker) {
+		foreach ($speaker_list_json as $key => $json_speaker) {
 
 			if (1 == $json_speaker["opinions"])
 				$opinions = "FOR";
@@ -241,4 +241,35 @@ function tvs_wp_pagination($the_query)
 			'next_text' => __('Next  →'),
 			// 'type'  => 'list',
 		));
+}
+
+
+function tvs_frontpage_metabox($id)
+{
+	$transcriptUrl = "";
+	$opinionUrl = "";
+	$speaker = "";
+	// $opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
+	$opinionPage = get_post_meta($id, 'tvsDebateMB_opinion', true);
+	$transcriptPage = get_post_meta($id, 'tvsDebateMB_transcript', true);
+
+	$speaker_list = get_post_meta($id, 'tvsDebateMB_speakerList', true);
+	$speaker_list_json = json_decode($speaker_list, true);
+// 	echo "<pre>";
+// var_dump(	$speaker_list_json);
+// print_r( $speaker_list_json["speaker"]);
+	if ($speaker_list_json[0]["speaker"] != "0") {
+		$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
+	}
+
+	if ($transcriptPage != "0") {
+		$transcriptUrl = '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
+	}
+
+	if ($opinionPage != "0") {
+		$opinionUrl = '<li><a  href="' . get_permalink($opinionPage) . '">Opinion poll</a></li>';
+	}
+
+	return $transcriptUrl . $speaker . $opinionUrl;
+
 }
