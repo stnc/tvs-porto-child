@@ -24,9 +24,35 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           <div class="col-lg-5">
 
 
+          https://stackoverflow.com/questions/9305040/how-can-i-check-for-a-thumbnail-in-wordpress
 
-            <?php $url = wp_get_attachment_url(get_post_thumbnail_id($post->ID), 'full'); ?>
-            <img src="<?php echo $url ?>" />
+
+
+          
+          <?php 
+          
+          if (has_post_thumbnail()) { 
+            ?>
+                <?php the_post_thumbnail();            // just the image        ?>
+                <br>
+                <?php the_post_thumbnail('thumbnail'); // just the thumbnail    ?>  <br>
+                <?php the_post_thumbnail('medium');    // just the Medium Image ?>  <br>
+                <?php the_post_thumbnail('large');     // just the Medium Image ?>  <br>
+                <?php 
+                // adding a 200x200 height and width along with a class to it.
+                    the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
+                ?>  <br>
+                <?php 
+                // Adding a few classes to the medium image
+                    the_post_thumbnail('medium', array('class' => 'alignleft another_class')); 
+                ?>
+            
+            <?php
+            }
+          
+          
+          
+       ?>
 
 
 
@@ -93,13 +119,18 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                         <?php
                         foreach ($json_video_list as $key => $video):
-                          $url = wp_get_attachment_url($video["youtubePicture"], 'thumbnail');
+                          $src = wp_get_attachment_image_src(  $video["youtubePicture"], 'thumbnail', false, '' );
                           ?>
                           <div class="col">
                             <div class="card shadow-sm">
                               <a href="#inline-video<?php echo $key ?>" class="debateBox"
                                 data-glightbox="width: 700; height: auto;">
-                                <img width="200" height="200" src="<?php echo $url ?>" alt="image" />
+                                <?php
+                                if  ( ! empty( $src ) ) :
+                                  ?>
+                                 <img   src="<?php echo $src[0] ?>" style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px" alt="image" />
+                             <?php endif  ?>
+                               
                               </a>
 
                               <div id="inline-video<?php echo $key ?>" style="display: none">
@@ -122,7 +153,8 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                             </div>
 
                           </div>
-                        <?php endforeach;   ?>
+                        <?php endforeach; 
+                          ?>
                       </div>
                     <?php endif; ?>
 
@@ -144,11 +176,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
           </div>
           <div class="col-lg-7">
-
-
-
             <?php the_content(); ?>
-         
           </div>
         </div>
       <?php endif; ?>
