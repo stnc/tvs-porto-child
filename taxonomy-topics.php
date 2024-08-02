@@ -82,21 +82,14 @@ require_once ("functions-tvs.php");
 									<div class="row">
 										<?php if (count($featured_images)): ?>
 											<div class="col-lg-5">
-												<?php
-												// Post Slideshow
-												$slideshow_type = get_post_meta(get_the_ID(), 'slideshow_type', true);
-
-												if (!$slideshow_type) {
-													$slideshow_type = 'images';
-												}
-												porto_get_template_part(
-													'views/posts/post-media/' . sanitize_file_name($slideshow_type),
-													null,
-													('images' == $slideshow_type ? array(
-														'image_size' => 'blog-medium',
-													) : false)
-												);
-												?>
+											<div class="featured-image" style="margin-bottom: 10px">
+													<?php if (has_post_thumbnail()):
+														the_post_thumbnail('large', array('class' => 'alignleft-'));
+													else:
+														$url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
+													  <img src="<?php echo $url ?>" />
+													<?php endif ?>
+												</div>
 											</div>
 											<div class="col-lg-7">
 											<?php else: ?>
@@ -163,14 +156,17 @@ require_once ("functions-tvs.php");
 												<div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-6">
 													<?php
 													foreach ($json_video_list as $key => $video):
-														$url = wp_get_attachment_url($video["youtubePicture"], 'thumbnail');
+														$src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
 														?>
 														<div class="col">
 															<div class="card shadow-sm">
 																<a href="#inline-video<?php echo $debate_count ?>" class="debateBox"
 																	data-glightbox="width: 700; height: auto;">
-																	<img width="200" height="200" src="<?php echo $url ?>"
-																		alt="image" />
+																	<?php if (!empty($src)): ?>
+																		<img src="<?php echo $src[0] ?>"
+																			style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
+																			alt="featured-image<?php echo $key ?>" />
+																	<?php endif ?>
 																</a>
 
 																<div id="inline-video<?php echo $debate_count ?>" style="display: none">
