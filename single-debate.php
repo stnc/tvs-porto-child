@@ -109,14 +109,14 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                           ?>
                           <div class="col">
                             <div class="card shadow-sm">
-                              <a href="#inline-video<?php echo $key ?>" class="debateBox"
+                              <a href="#inline-video<?php echo $debate_count.$key ?>" class="debateBox"
                                 data-glightbox="width: 700; height: auto;">
                                 <?php if (!empty($src)): ?>
                                   <img src="<?php echo $src[0] ?>"
                                     style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px" alt="featured-image<?php echo $key ?>"/>
                                 <?php endif ?> </a>
 
-                              <div id="inline-video<?php echo $key ?>" style="display: none">
+                              <div id="inline-video<?php echo $debate_count.$key ?>" style="display: none">
                                 <div class="inline-inner">
                                   <h4 class="text-center"><?php echo get_the_title($debateID) ?></h4>
                                   <div class="text-center">
@@ -163,10 +163,12 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
     var lightboxInlineIframe = GLightbox({
       selector: '.debateBox'
     });
-
-
-
-
   </script>
-
+<style>.form-1-box legend {
+  font-size: inherit;
+  line-height: 30px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #555;
+}</style>
   <?php get_footer(); ?>

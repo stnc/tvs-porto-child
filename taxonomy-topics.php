@@ -16,38 +16,26 @@ require_once ("functions-tvs.php");
 		<div id="content" role="main">
 
 
-		<?php if ( category_description() ) : ?>
-		<div class="page-content">
-			<?php echo category_description(); ?>
-		</div>
-	     <?php endif; ?>
+			<?php if (category_description()): ?>
+				<div class="page-content">
+					<?php echo category_description(); ?>
+				</div>
+			<?php endif; ?>
 
 
-		
-			<?php
-			$the_query = new WP_Query(
-				array(
-					// 'post_type'   => get_post_type(),
-					// 'posts_per_page' => 4,
-					'post_type' => 'debate',
-					'post_status' => 'publish',
-					'orderby' => 'id',
-					'paged' => get_query_var('paged') ? get_query_var('paged') : 1,
-				)
-			);
-			?>
-			<?php if ($the_query->have_posts()): ?>
+
+			
+			<?php if (have_posts()): ?>
 				<div class="page-debates clearfix">
 					<div class="row debate-row archive-debate-row">
 						<?php
-						$event_count = 0;
-						while ($the_query->have_posts()):
-							$event_count++;
-							$the_query->the_post();
+						$debate_count = 0;
+						while (have_posts()):
+							$debate_count++;
+							the_post();
 							?>
 							<div
 								class="col-lg-12  col-md-12 offset-lg-0 offset-md-2 custom-sm-margin-bottom-1 p-b-lg single-debate">
-
 								<?php
 								$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
 								$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
@@ -82,12 +70,12 @@ require_once ("functions-tvs.php");
 									<div class="row">
 										<?php if (count($featured_images)): ?>
 											<div class="col-lg-5">
-											<div class="featured-image" style="margin-bottom: 10px">
+												<div class="featured-image" style="margin-bottom: 10px">
 													<?php if (has_post_thumbnail()):
 														the_post_thumbnail('large', array('class' => 'alignleft-'));
 													else:
 														$url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
-													  <img src="<?php echo $url ?>" />
+														<img src="<?php echo $url ?>" />
 													<?php endif ?>
 												</div>
 											</div>
@@ -144,7 +132,7 @@ require_once ("functions-tvs.php");
 										}
 										?>
 
-<div class="container">
+										<div class="container">
 											<h4 class="fw-light">Videos</h4>
 											<?php
 											$video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
@@ -160,7 +148,7 @@ require_once ("functions-tvs.php");
 														?>
 														<div class="col">
 															<div class="card shadow-sm">
-																<a href="#inline-video<?php echo $debate_count ?>" class="debateBox"
+																<a href="#inline-video<?php echo $debate_count.$key ?>" class="debateBox"
 																	data-glightbox="width: 700; height: auto;">
 																	<?php if (!empty($src)): ?>
 																		<img src="<?php echo $src[0] ?>"
@@ -169,7 +157,7 @@ require_once ("functions-tvs.php");
 																	<?php endif ?>
 																</a>
 
-																<div id="inline-video<?php echo $debate_count ?>" style="display: none">
+																<div id="inline-video<?php echo $debate_count.$key ?>" style="display: none">
 																	<div class="inline-inner">
 																		<h4 class="text-center"><?php echo get_the_title($debateID) ?>
 																		</h4>
@@ -214,7 +202,7 @@ require_once ("functions-tvs.php");
 		</div>
 	</div>
 </div>
-<link rel='stylesheet'  href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
+<link rel='stylesheet' href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
 <script src="/wp-content/plugins/tvs-debate/assets/js/glightbox.min.js" id="jquery-mag-js"></script>
 <script>
     var lightboxInlineIframe = GLightbox({
