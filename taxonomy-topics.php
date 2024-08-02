@@ -150,6 +150,56 @@ require_once ("functions-tvs.php");
 											echo porto_filter_output($post_meta);
 										}
 										?>
+
+<div class="container">
+											<h4 class="fw-light">Videos</h4>
+											<?php
+											$video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
+
+											$json_video_list = json_decode($video_list_db, true);
+
+											if ($json_video_list):
+												?>
+												<div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-6">
+													<?php
+													foreach ($json_video_list as $key => $video):
+														$url = wp_get_attachment_url($video["youtubePicture"], 'thumbnail');
+														?>
+														<div class="col">
+															<div class="card shadow-sm">
+																<a href="#inline-video<?php echo $debate_count ?>" class="debateBox"
+																	data-glightbox="width: 700; height: auto;">
+																	<img width="200" height="200" src="<?php echo $url ?>"
+																		alt="image" />
+																</a>
+
+																<div id="inline-video<?php echo $debate_count ?>" style="display: none">
+																	<div class="inline-inner">
+																		<h4 class="text-center"><?php echo get_the_title($debateID) ?>
+																		</h4>
+																		<div class="text-center">
+
+																			<iframe width="600" height="400"
+																				src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
+																				title="YouTube video player" frameborder="0"
+																				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+																				referrerpolicy="strict-origin-when-cross-origin"
+																				allowfullscreen></iframe>
+																			<p>
+																				<?php echo $video["description"] ?>
+																			</p>
+																		</div>
+																		<a class="gtrigger-close inline-close-btn" href="#">Close
+																			Box</a>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+													<?php endforeach; ?>
+												</div>
+											<?php endif; ?>
+										</div>
 								</article>
 
 
@@ -168,5 +218,12 @@ require_once ("functions-tvs.php");
 		</div>
 	</div>
 </div>
+<link rel='stylesheet'  href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
+<script src="/wp-content/plugins/tvs-debate/assets/js/glightbox.min.js" id="jquery-mag-js"></script>
+<script>
+    var lightboxInlineIframe = GLightbox({
+      selector: '.debateBox'
+    });
+  </script>
 <?php
 get_footer();
