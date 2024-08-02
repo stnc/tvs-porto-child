@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * IMPORtant -- this is only experiment 
+ * Please  use  speaker.php  in tvs-debate plugin
+ */
 global $porto_settings, $porto_layout;
 
 $portfolio_layout = 'medium';

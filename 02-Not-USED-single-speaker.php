@@ -1,6 +1,9 @@
 <?php get_header(); ?>
 <?php
-
+/**
+ * IMPORtant -- this is only experiment 
+ * Please  use  speaker.php  in tvs-debate plugin
+ */
 $builder_id = porto_check_builder_condition( 'single' );
 if ( $builder_id ) {
 	echo do_shortcode( '[porto_block id="' . esc_attr( $builder_id ) . '" tracking="layout-single-' . esc_attr( $builder_id ) . '"]' );

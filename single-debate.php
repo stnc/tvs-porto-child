@@ -24,58 +24,48 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           <div class="col-lg-5">
 
 
-          https://stackoverflow.com/questions/9305040/how-can-i-check-for-a-thumbnail-in-wordpress
 
 
 
-          
-          <?php 
-          
-          if (has_post_thumbnail()) { 
-            ?>
-                <?php the_post_thumbnail();            // just the image        ?>
-                <br>
-                <?php the_post_thumbnail('thumbnail'); // just the thumbnail    ?>  <br>
-                <?php the_post_thumbnail('medium');    // just the Medium Image ?>  <br>
-                <?php the_post_thumbnail('large');     // just the Medium Image ?>  <br>
+          <div class="featured-image" style="margin-bottom: 10px">
+          <?php  if (has_post_thumbnail()) :  ?>
+                <?php //the_post_thumbnail();            // just the image        ?>
+                <?php //the_post_thumbnail('thumbnail'); // just the thumbnail    ?>  
+                <?php //the_post_thumbnail('medium');    // just the Medium Image ?>  
+                <?php //the_post_thumbnail('large');     // just the Medium Image ?>  
                 <?php 
+                    //      https://stackoverflow.com/questions/9305040/how-can-i-check-for-a-thumbnail-in-wordpress
+
                 // adding a 200x200 height and width along with a class to it.
-                    the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
-                ?>  <br>
+                  //  the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
+                ?> 
                 <?php 
                 // Adding a few classes to the medium image
-                    the_post_thumbnail('medium', array('class' => 'alignleft another_class')); 
+                    the_post_thumbnail('large', array('class' => 'alignleft-')); 
                 ?>
             
             <?php
-            }
-          
-          
-          
-       ?>
-
-
-
-            <div class="accordion" id="accordionExample">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                    aria-expanded="true" aria-controls="collapseOne">
-                    Speakers
-                  </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-
-                    <?php
+             else:
+              $url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
+              <img src="<?php echo $url ?>" />
+              <?php   endif   ?>
+          </div>
+  
+          <div class="accordion accordion-flush------" id="accordionSingleDebate">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseSpeaker" aria-expanded="false" aria-controls="flush-collapseSpeaker">
+      Speakers
+      </button>
+    </h2>
+    <div id="flush-collapseSpeaker" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionSingleDebate">
+      <div class="accordion-body">
+      <?php
                     $speaker_list_db = get_post_meta($debateID, 'tvsDebateMB_speakerList', true);
 
                     $speaker_list_json = json_decode($speaker_list_db, true);
-                    // echo "<pre>";
-// print_r($speaker_list_json);
                     if ($speaker_list_json):
-                      echo '<ul>';
+                      echo '<ul style="  list-style-type: none; padding:2px ">';
                       foreach ($speaker_list_json as $key => $json_speaker) {
 
                         if (1 == $json_speaker["opinions"])
@@ -90,26 +80,18 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                       echo '</ul>';
                     endif;
                     ?>
-
-
-
-
-                  </div>
-                </div>
-              </div>
-
-
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                    Videos
-                  </button>
-                </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                  data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                    <?php
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="flush-headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseVideo" aria-expanded="false" aria-controls="flush-collapseVideo">
+        Videos
+      </button>
+    </h2>
+    <div id="flush-collapseVideo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionSingleDebate">
+      <div class="accordion-body">
+      <?php
                     $video_list_db = get_post_meta($debateID, 'tvsDebateMB_videoList', true);
 
                     $json_video_list = json_decode($video_list_db, true);
@@ -158,20 +140,11 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                       </div>
                     <?php endif; ?>
 
+      </div>
+    </div>
+  </div>
 
-                  </div>
-                </div>
-              </div>
-
-
-
-            </div>
-
-
-
-
-
-
+</div>
 
 
           </div>
@@ -189,6 +162,10 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
     var lightboxInlineIframe = GLightbox({
       selector: '.debateBox'
     });
+
+
+
+
   </script>
 
   <?php get_footer(); ?>
