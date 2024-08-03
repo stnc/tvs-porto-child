@@ -102,21 +102,21 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
                     if ($json_video_list):
                       ?>
-                      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                      <div class="row row-cols-2 row-cols-sm-4 row-cols-md-3 g-3">
                         <?php
                         foreach ($json_video_list as $key => $video):
                           $src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
                           ?>
                           <div class="col">
                             <div class="card shadow-sm">
-                              <a href="#inline-video<?php echo $debate_count.$key ?>" class="debateBox"
+                              <a href="#inline-video<?php echo $key ?>" class="debateBox"
                                 data-glightbox="width: 700; height: auto;">
                                 <?php if (!empty($src)): ?>
                                   <img src="<?php echo $src[0] ?>"
                                     style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px" alt="featured-image<?php echo $key ?>"/>
                                 <?php endif ?> </a>
 
-                              <div id="inline-video<?php echo $debate_count.$key ?>" style="display: none">
+                              <div id="inline-video<?php echo $key ?>" style="display: none">
                                 <div class="inline-inner">
                                   <h4 class="text-center"><?php echo get_the_title($debateID) ?></h4>
                                   <div class="text-center">
@@ -130,7 +130,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                       <?php echo $video["description"] ?>
                                     </p>
                                   </div>
-                                  <a class="gtrigger-close inline-close-btn" href="#">Close Box</a>
+                                  <a class="gtrigger-close inline-close-btn" href="#">Close</a>
                                 </div>
                               </div>
                             </div>
