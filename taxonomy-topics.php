@@ -103,12 +103,12 @@ require_once ("functions-tvs.php");
 													porto_render_rich_snippets(false);
 													if (!empty($porto_settings['blog-excerpt'])) {
 														echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-														tvs_speacial_meta();
+														tvs_speacial_meta(get_the_ID());
 													} else {
 
 														echo '<div class="entry-content">';
 														echo porto_the_content();
-														tvs_speacial_meta();
+														tvs_speacial_meta(get_the_ID());
 														wp_link_pages(
 															array(
 																'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -159,7 +159,7 @@ require_once ("functions-tvs.php");
 
 																<div id="inline-video<?php echo $debate_count.$key ?>" style="display: none">
 																	<div class="inline-inner">
-																		<h4 class="text-center"><?php echo get_the_title($debateID) ?>
+																		<h4 class="text-center"><?php echo get_the_title(get_the_ID()) ?>
 																		</h4>
 																		<div class="text-center">
 

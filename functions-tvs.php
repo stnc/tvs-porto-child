@@ -152,14 +152,16 @@ function tvs_kama_paginate_links_data(array $args): array
 	return $pages;
 }
 
-function tvs_speacial_meta()
+function tvs_speacial_meta($id)
 {
-	$speaker_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_speakerList', true);
+	$speaker_list_db = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list_db, true);
+
+	
 	// echo "<pre>";
 	// print_r($speaker_list_json);
-	if ($speaker_list_json["speaker"]!=0):
-		echo '<ul style="border:1px solid black">';
+	if ($speaker_list_json[0]["speaker"] != "0"):
+		echo '<ul style="border:1px solid black;list-style-type: none; ">';
 		foreach ($speaker_list_json as $key => $json_speaker) {
 
 			if (1 == $json_speaker["opinions"])

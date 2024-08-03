@@ -22,11 +22,6 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
       <div class="branch-content">
         <div class="row">
           <div class="col-lg-5">
-
-
-
-
-
             <div class="featured-image" style="margin-bottom: 10px">
               <?php if (has_post_thumbnail()): ?>
                 <?php //the_post_thumbnail();            // just the image        ?>
@@ -67,7 +62,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
                     $speaker_list_json = json_decode($speaker_list_db, true);
                     if ($speaker_list_json):
-                      echo '<ul style="  list-style-type: none; padding:2px ">';
+                      echo '<ul style="list-style-type: none; padding:2px ">';
                       foreach ($speaker_list_json as $key => $json_speaker) {
 
                         if (1 == $json_speaker["opinions"])
@@ -164,11 +159,4 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
       selector: '.debateBox'
     });
   </script>
-<style>.form-1-box legend {
-  font-size: inherit;
-  line-height: 30px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: #555;
-}</style>
   <?php get_footer(); ?>
