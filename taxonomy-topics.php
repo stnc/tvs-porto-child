@@ -173,8 +173,7 @@ require_once ("functions-tvs.php");
 																				<?php echo $video["description"] ?>
 																			</p>
 																		</div>
-																		<a class="gtrigger-close inline-close-btn" href="#">Close
-																			Box</a>
+																		<a class="gtrigger-close inline-close-btn" href="#">Close</a>
 																	</div>
 																</div>
 															</div>

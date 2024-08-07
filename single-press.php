@@ -24,16 +24,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           <div class="col-lg-5">
             <div class="featured-image" style="margin-bottom: 10px">
               <?php if (has_post_thumbnail()): ?>
-                <?php //the_post_thumbnail();            // just the image        ?>
-                <?php //the_post_thumbnail('thumbnail'); // just the thumbnail    ?>
-                <?php //the_post_thumbnail('medium');    // just the Medium Image ?>
-                <?php //the_post_thumbnail('large');     // just the Medium Image ?>
-                <?php
-                //      https://stackoverflow.com/questions/9305040/how-can-i-check-for-a-thumbnail-in-wordpress
           
-                // adding a 200x200 height and width along with a class to it.
-                //  the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
-                ?>
                 <?php
                 // Adding a few classes to the medium image
                 the_post_thumbnail('large', array('class' => 'alignleft-'));
