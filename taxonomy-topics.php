@@ -7,7 +7,24 @@ require_once ("functions-tvs.php");
 
 <div class="row">
 	<div class="col-lg-3">
-		<?php dynamic_sidebar('tvs-main-sidebar'); ?>
+		<?php
+		
+	//	$categories = get_the_category();
+
+         $category_id = $categories[0]->cat_ID;
+		 $current_category = get_queried_object();
+// echo "<pre>";
+		// print_r($current_category); 
+
+		$ssidebarMenu = get_term_meta( $current_category->term_id, '__term_meta_text', true );
+		 $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
+
+	if ($ssidebarMenu){
+		wp_nav_menu( array( "menu"=> $ssidebarMenu,'theme_location' => 'header-top-menu' ) );
+	}
+	
+		
+		//dynamic_sidebar('tvs-main-sidebar'); ?>
 	</div>
 
 
