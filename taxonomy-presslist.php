@@ -4,7 +4,16 @@
 
 <div class="row">
 	<div class="col-lg-3">
-		<?php dynamic_sidebar('tvs-press-index'); ?>
+		<?php 
+	   //	$categories = get_the_category();
+	   $category_id = $categories[0]->cat_ID;
+	   $current_category = get_queried_object();
+	   $ssidebarMenu = get_term_meta( $current_category->term_id, 'tvsPressMB_SidebarMenu', true );
+	   $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
+		if ($ssidebarMenu){
+			wp_nav_menu( array( "menu"=> $ssidebarMenu,'theme_location' => 'header-top-menu' ) );
+		}
+		?>
 	</div>
 
 
