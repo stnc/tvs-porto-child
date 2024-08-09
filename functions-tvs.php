@@ -152,25 +152,23 @@ function tvs_kama_paginate_links_data(array $args): array
 	return $pages;
 }
 
-function tvs_speacial_meta($id)
+function tvs_speakers_metabox($id )
 {
 	$speaker_list_db = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list_db, true);
-
-	
-	// echo "<pre>";
-	// print_r($speaker_list_json);
-	if ($speaker_list_json[0]["speaker"] != "0"):
+	//  echo "<pre>";
+	//  print_r($speaker_list_json);
+	if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0):
 		echo '<ul style="border:1px solid black;list-style-type: none; ">';
 		foreach ($speaker_list_json as $key => $json_speaker) {
-
+			$spekerLink='<a style="color:black" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
 			if (1 == $json_speaker["opinions"])
 				$opinions = "FOR";
 
 			if (2 == $json_speaker["opinions"])
 				$opinions = "AGAINST";
 
-			echo '<li><strong>' . get_the_title($json_speaker["speaker"]) . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
+			echo '<li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
 
 		}
 		echo '</ul>';

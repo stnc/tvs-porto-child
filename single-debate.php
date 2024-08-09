@@ -61,17 +61,18 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     $speaker_list_db = get_post_meta($debateID, 'tvsDebateMB_speakerList', true);
 
                     $speaker_list_json = json_decode($speaker_list_db, true);
-                    if ($speaker_list_json):
+                    if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0) :
                       echo '<ul style="list-style-type: none; padding:2px ">';
                       foreach ($speaker_list_json as $key => $json_speaker) {
-
+                        $spekerLink=get_the_permalink($json_speaker["speaker"]);
+                        $spekerLink='<a style="color:#777777;text-decoration: underline;" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
                         if (1 == $json_speaker["opinions"])
                           $opinions = "FOR";
 
                         if (2 == $json_speaker["opinions"])
                           $opinions = "AGAINST";
 
-                        echo '<li><strong>' . get_the_title($json_speaker["speaker"]) . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
+                        echo '<hr style="margin:5px"><li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
 
                       }
                       echo '</ul>';
@@ -103,7 +104,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                           $src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
                           ?>
                           <div class="col">
-                            <div class="card shadow-sm">
+                            <div class="card- shadow-sm-">
                               <a href="#inline-video<?php echo $key ?>" class="debateBox"
                                 data-glightbox="width: 700; height: auto;">
                                 <?php if (!empty($src)): ?>
