@@ -27,9 +27,6 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 <?php
                 // Adding a few classes to the medium image
                 the_post_thumbnail('large', array('class' => 'alignleft-'));
-                ?>
-
-                <?php
               else:
                 $url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
                 <img src="<?php echo $url ?>" />

@@ -37,9 +37,6 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 <?php
                 // Adding a few classes to the medium image
                 the_post_thumbnail('large', array('class' => 'alignleft-'));
-                ?>
-
-                <?php
               else:
                 $url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
                 <img src="<?php echo $url ?>" />
@@ -47,57 +44,61 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
             </div>
 
             <div class="accordion accordion-flush------" id="accordionSingleDebate">
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingOne">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseSpeaker" aria-expanded="false" aria-controls="flush-collapseSpeaker">
-                    Speakers
-                  </button>
-                </h2>
-                <div id="flush-collapseSpeaker" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
-                  data-bs-parent="#accordionSingleDebate">
-                  <div class="accordion-body">
-                    <?php
-                    $speaker_list_db = get_post_meta($debateID, 'tvsDebateMB_speakerList', true);
+              <?php
+              $speaker_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_speakerList', true);
+              $speaker_list_json = json_decode($speaker_list_db, true);
+              if ($speaker_list_json):
+                if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0): ?>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseSpeaker" aria-expanded="false" aria-controls="flush-collapseSpeaker">
+                        Speakers
+                      </button>
+                    </h2>
+                    <div id="flush-collapseSpeaker" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                      data-bs-parent="#accordionSingleDebate">
+                      <div class="accordion-body">
+                        <?php
+                        echo '<ul style="list-style-type: none; padding:2px ">';
+                        foreach ($speaker_list_json as $key => $json_speaker) {
+                          $spekerLink = get_the_permalink($json_speaker["speaker"]);
+                          $spekerLink = '<a style="color:#777777;text-decoration: underline;" href="' . $spekerLink . '">' . get_the_title($json_speaker["speaker"]) . '</a>';
+                          if (1 == $json_speaker["opinions"])
+                            $opinions = "FOR";
 
-                    $speaker_list_json = json_decode($speaker_list_db, true);
-                    if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0) :
-                      echo '<ul style="list-style-type: none; padding:2px ">';
-                      foreach ($speaker_list_json as $key => $json_speaker) {
-                        $spekerLink=get_the_permalink($json_speaker["speaker"]);
-                        $spekerLink='<a style="color:#777777;text-decoration: underline;" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
-                        if (1 == $json_speaker["opinions"])
-                          $opinions = "FOR";
+                          if (2 == $json_speaker["opinions"])
+                            $opinions = "AGAINST";
 
-                        if (2 == $json_speaker["opinions"])
-                          $opinions = "AGAINST";
+                          echo '<hr style="margin:5px"><li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
+                        }
+                        echo '</ul>';
 
-                        echo '<hr style="margin:5px"><li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
-
-                      }
-                      echo '</ul>';
-                    endif;
-                    ?>
+                        ?>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#flush-collapseVideo" aria-expanded="false" aria-controls="flush-collapseVideo">
-                    Videos
-                  </button>
-                </h2>
-                <div id="flush-collapseVideo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
-                  data-bs-parent="#accordionSingleDebate">
-                  <div class="accordion-body">
-                    <?php
-                    $video_list_db = get_post_meta($debateID, 'tvsDebateMB_videoList', true);
+                <?php endif; ?>
+              <?php endif; ?>
 
-                    $json_video_list = json_decode($video_list_db, true);
 
-                    if ($json_video_list):
-                      ?>
+
+
+              <?php
+              $video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
+              $json_video_list = json_decode($video_list_db, true);
+              if (!$json_video_list || $json_video_list[0]["title"] != "Later (Not Clear Yet)"):
+                ?>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseVideo" aria-expanded="false" aria-controls="flush-collapseVideo">
+                      Videos
+                    </button>
+                  </h2>
+                  <div id="flush-collapseVideo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                    data-bs-parent="#accordionSingleDebate">
+                    <div class="accordion-body">
                       <div class="row row-cols-2 row-cols-sm-4 row-cols-md-3 g-3">
                         <?php
                         foreach ($json_video_list as $key => $video):
@@ -109,12 +110,15 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                 data-glightbox="width: 700; height: auto;">
                                 <?php if (!empty($src)): ?>
                                   <img src="<?php echo $src[0] ?>"
-                                    style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px" alt="featured-image<?php echo $key ?>"/>
-                                <?php endif ?> </a>
+                                    style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
+                                    alt="<?php echo $video["title"] ?>" />
+                                <?php endif ?>
+                                <span> <?php echo $video["title"] ?> </span>
+                              </a>
 
                               <div id="inline-video<?php echo $key ?>" style="display: none">
                                 <div class="inline-inner">
-                                  <h4 class="text-center"><?php echo get_the_title($debateID) ?></h4>
+                                  <h4 class="text-center"> <?php echo $video["title"] ?> </h4>
                                   <div class="text-center">
 
                                     <iframe width="600" height="400"
@@ -135,11 +139,14 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                         <?php endforeach;
                         ?>
                       </div>
-                    <?php endif; ?>
 
+
+                    </div>
                   </div>
                 </div>
-              </div>
+              <?php endif; ?>
+
+
 
             </div>
 

@@ -152,28 +152,7 @@ function tvs_kama_paginate_links_data(array $args): array
 	return $pages;
 }
 
-function tvs_speakers_metabox($id )
-{
-	$speaker_list_db = get_post_meta($id, 'tvsDebateMB_speakerList', true);
-	$speaker_list_json = json_decode($speaker_list_db, true);
-	//  echo "<pre>";
-	//  print_r($speaker_list_json);
-	if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0):
-		echo '<ul style="border:1px solid black;list-style-type: none; ">';
-		foreach ($speaker_list_json as $key => $json_speaker) {
-			$spekerLink='<a style="color:black" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
-			if (1 == $json_speaker["opinions"])
-				$opinions = "FOR";
 
-			if (2 == $json_speaker["opinions"])
-				$opinions = "AGAINST";
-
-			echo '<li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
-
-		}
-		echo '</ul>';
-	endif;
-}
 /**
  * /tvs custom pagination 
  * @param array $links_data
@@ -243,7 +222,30 @@ function tvs_wp_pagination($the_query)
 		));
 }
 
+function tvs_speakersTheme_metabox($id )
+{
+	$speaker_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_speakerList', true);
+	$speaker_list_json = json_decode($speaker_list_db, true);
+	// echo "<pre>";
+	// print_r($speaker_list_json);
+	if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0) :
+		echo '<ul style="border:1px solid black;list-style-type: none;">';
+		$spekerLink="";
+		foreach ($speaker_list_json as $key => $json_speaker) {
+			$spekerLink=get_the_permalink($json_speaker["speaker"]);
+			$spekerLink='<a style="color:#777777;text-decoration: underline;" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
+			if (1 == $json_speaker["opinions"])
+				$opinions = "FOR";
 
+			if (2 == $json_speaker["opinions"])
+				$opinions = "AGAINST";
+
+			echo '<li><strong>' . $spekerLink . '</strong> ' . $json_speaker["introduction"] . ' <span style="color:red"> ' . $opinions . '  </span> </li>';
+
+		}
+		echo ' </ul>';
+	endif;
+}
 function tvs_frontpage_metabox($id)
 {
 	$transcriptUrl = "";
@@ -272,4 +274,66 @@ function tvs_frontpage_metabox($id)
 
 	return $transcriptUrl . $speaker . $opinionUrl;
 
+}
+
+
+
+
+function tvs_videoTheme_metabox($count):void
+{
+
+$video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
+$json_video_list = json_decode($video_list_db, true);
+	//  echo "<pre>";
+	//  print_r($json_video_list);
+
+if (!$json_video_list || $json_video_list[0]["title"] != "Later (Not Clear Yet)" ):
+?>
+<div class="container">
+<h4 class="fw-light">Videos</h4>
+	<div class="row row-cols-2 row-cols-sm-4 row-cols-md-6 g-3">
+		<?php
+		foreach ($json_video_list as $key => $video):
+			$src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
+			?>
+			<div class="col">
+				<div class="card- shadow-sm-">
+					<a href="#inline-video<?php echo $count.$key ?>" class="debateBox"
+						data-glightbox="width: 700; height: auto;" > 
+						<?php if (!empty($src)): ?>
+							<img src="<?php echo $src[0] ?>"
+								style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
+								alt="<?php echo $video["title"] ?>" />
+						<?php endif ?>
+						<span> 	<?php echo $video["title"] ?>  </span>
+					</a>
+
+					<div id="inline-video<?php echo $count.$key ?>" style="display: none">
+						<div class="inline-inner">
+						<h4 class="text-center">	<?php echo $video["title"] ?> </h4>
+							<div class="text-center">
+
+								<iframe width="600" height="400"
+									src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
+									title="YouTube video player" frameborder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+									referrerpolicy="strict-origin-when-cross-origin"
+									allowfullscreen></iframe>
+								<p>
+									<?php echo $video["description"] ?>
+								</p>
+							</div>
+							<a class="gtrigger-close inline-close-btn" href="#">Close</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		<?php endforeach; ?>
+	</div>
+</div> 
+<?php endif; ?>
+
+
+<?php
 }

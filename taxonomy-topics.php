@@ -8,8 +8,8 @@ require_once ("functions-tvs.php");
 <div class="row">
 	<div class="col-lg-3">
 		<?php
-	   //	$categories = get_the_category();
-         $category_id = $categories[0]->cat_ID;
+	   //	https://paulund.co.uk/get-all-categories-in-wordpress
+       //  $category_id = $categories[0]->cat_ID;
 		 $current_category = get_queried_object();
 		 $ssidebarMenu = get_term_meta( $current_category->term_id, 'tvsTopicsMB_SidebarMenu', true );
 		 $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
@@ -111,12 +111,12 @@ require_once ("functions-tvs.php");
 													porto_render_rich_snippets(false);
 													if (!empty($porto_settings['blog-excerpt'])) {
 														echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-														tvs_speakers_metabox(get_the_ID());
+														tvs_speakersTheme_metabox(get_the_ID());
 													} else {
 
 														echo '<div class="entry-content">';
 														echo porto_the_content();
-														tvs_speakers_metabox(get_the_ID());
+														tvs_speakersTheme_metabox(get_the_ID());
 														wp_link_pages(
 															array(
 																'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -140,57 +140,7 @@ require_once ("functions-tvs.php");
 										}
 										?>
 
-										<div class="container">
-											<h4 class="fw-light">Videos</h4>
-											<?php
-											$video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
-
-											$json_video_list = json_decode($video_list_db, true);
-
-											if ($json_video_list):
-												?>
-												<div class="row row-cols-1 row-cols-sm-2 row-cols-md-6 g-6">
-													<?php
-													foreach ($json_video_list as $key => $video):
-														$src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
-														?>
-														<div class="col">
-															<div class="card- shadow-sm-">
-																<a href="#inline-video<?php echo $debate_count.$key ?>" class="debateBox"
-																	data-glightbox="width: 700; height: auto;">
-																	<?php if (!empty($src)): ?>
-																		<img src="<?php echo $src[0] ?>"
-																			style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
-																			alt="featured-image<?php echo $key ?>" />
-																	<?php endif ?>
-																</a>
-
-																<div id="inline-video<?php echo $debate_count.$key ?>" style="display: none">
-																	<div class="inline-inner">
-																		<h4 class="text-center"><?php echo get_the_title(get_the_ID()) ?>
-																		</h4>
-																		<div class="text-center">
-
-																			<iframe width="600" height="400"
-																				src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
-																				title="YouTube video player" frameborder="0"
-																				allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-																				referrerpolicy="strict-origin-when-cross-origin"
-																				allowfullscreen></iframe>
-																			<p>
-																				<?php echo $video["description"] ?>
-																			</p>
-																		</div>
-																		<a class="gtrigger-close inline-close-btn" href="#">Close</a>
-																	</div>
-																</div>
-															</div>
-
-														</div>
-													<?php endforeach; ?>
-												</div>
-											<?php endif; ?>
-										</div>
+                                       <?php tvs_videoTheme_metabox($debate_count); 	?>
 								</article>
 
 

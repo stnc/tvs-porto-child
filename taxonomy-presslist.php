@@ -5,8 +5,8 @@
 <div class="row">
 	<div class="col-lg-3">
 		<?php 
-	   //	$categories = get_the_category();
-	   $category_id = $categories[0]->cat_ID;
+	   //	https://paulund.co.uk/get-all-categories-in-wordpress
+	  // $category_id = $categories[0]->cat_ID;
 	   $current_category = get_queried_object();
 	   $ssidebarMenu = get_term_meta( $current_category->term_id, 'tvsPressMB_SidebarMenu', true );
 	   $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
@@ -26,7 +26,7 @@
 			
 
 
-			
+
 			<?php if (have_posts()): ?>
 				<div class="page-presslist clearfix">
 					<div class="row presslist-row archive-presslist-row">
