@@ -69,7 +69,6 @@
 
 												<div class="post-content">
 													<?php
-													// gerek yok ??? 
 													if (is_sticky() && is_home() && !is_paged()) {
 														printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 													}
@@ -79,10 +78,10 @@
 													<h2 class="entry-title"><a  target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressUrl', true); ?>"><?php the_title(); ?></a></h2>
 													<strong><?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressPublication', true); ?></strong>
 													<br>
-													<strong><?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true); ?></strong>
+													<strong><?php $date =get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true); 
+													$new_date_format = wp_date( 'l, F j, Y', strtotime( $date ) );
+													echo  $new_date_format;?></strong>
 													
-
-
 													<?php
 													porto_render_rich_snippets(false);
 													if (!empty($porto_settings['blog-excerpt'])) {

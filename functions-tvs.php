@@ -305,7 +305,7 @@ if (!$json_video_list || $json_video_list[0]["title"] != "Later (Not Clear Yet)"
 								style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
 								alt="<?php echo $video["title"] ?>" />
 						<?php endif ?>
-						<span> 	<?php echo $video["title"] ?>  </span>
+						<span class="w-100 float-left"> 	<?php echo $video["title"] ?>  </span>
 					</a>
 
 					<div id="inline-video<?php echo $count.$key ?>" style="display: none">
