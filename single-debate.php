@@ -34,6 +34,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 // adding a 200x200 height and width along with a class to it.
                 //  the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
                 ?>
+                >-^.qz;NH7j_KQL
                 <?php
                 // Adding a few classes to the medium image
                 the_post_thumbnail('large', array('class' => 'alignleft-'));
@@ -42,6 +43,29 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 <img src="<?php echo $url ?>" />
               <?php endif ?>
             </div>
+
+            <ul class="list-group" style="margin-bottom:10px">
+              <li class="list-group-item text-center"> <strong>Related Categories</strong> </li>
+              <?php
+              $terms = wp_get_post_terms(get_the_id(), 'topics', array('orderby' => 'term_order'));
+              //nested group 
+              //      $terms = json_decode(json_encode($terms), true);
+              //      $group = array();
+              // foreach ( $terms as $value ) {
+              //     $group[$value['parent']][] = $value;
+              // }
+            //  print_r($terms);     
+              // print_r($group);     
+              foreach ($terms as $value):
+                if ( $value->parent==0):
+                ?>
+                <li class="list-group-item"> <a href="<?php get_permalink($value->term_id); ?>"><?php echo $value->name; ?></a>
+                </li>
+              <?php endif ?>
+              <?php endforeach ?>
+
+
+            </ul>
 
             <div class="accordion accordion-flush------" id="accordionSingleDebate">
               <?php
@@ -113,7 +137,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                     style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
                                     alt="<?php echo $video["title"] ?>" />
                                 <?php endif ?>
-                                <span class="w-100  float-left"> 	<?php echo $video["title"] ?>  </span>
+                                <span class="w-100  float-left"> <?php echo $video["title"] ?> </span>
                               </a>
 
                               <div id="inline-video<?php echo $key ?>" style="display: none">
