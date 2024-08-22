@@ -1,21 +1,52 @@
 <?php get_header();
-//require_once ("functions-tvs.php");
+require_once("functions-tvs.php");
+global  $porto_mobile_toggle;
+$sticky_sidebar = porto_meta_sticky_sidebar();
+
+$sticky = "";
+if ($sticky_sidebar) {
+	$sticky = "data-plugin-sticky";
+}
+
+
+$mobile_sidebar = porto_get_meta_value( 'mobile_sidebar' );
+if ( 'yes' == $mobile_sidebar ) {
+	$mobile_sidebar = true;
+} elseif ( 'no' == $mobile_sidebar ) {
+	$mobile_sidebar = false;
+} else {
+	$mobile_sidebar = ! empty( $porto_settings['show-mobile-sidebar'] ) ? true : false;
+}
+
 ?>
 
 <div class="row">
-	<div class="col-lg-3 sidebar porto-alternative-default left-sidebar mobile-sidebar">
-		<?php 
-	   //	https://paulund.co.uk/get-all-categories-in-wordpress
-	  // $category_id = $categories[0]->cat_ID;
-	   $current_category = get_queried_object();
-	   $ssidebarMenu = get_term_meta( $current_category->term_id, 'tvsPressMB_SidebarMenu', true );
-	   $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
-		if ($ssidebarMenu){
-			wp_nav_menu( array( "menu"=> $ssidebarMenu,'theme_location' => 'header-top-menu' ) );
-		}
-		?>
-	</div>
+	<div class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo ! $mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+		<div class="pin-wrapper">
+			<div <?php echo $sticky ?>
+				data-plugin-options="<?php echo esc_attr('{"autoInit": true, "minWidth": 992, "containerSelector": ".main-content-wrap","autoFit":true, "paddingOffsetBottom": 10}'); ?>">
+				<?php if ( $mobile_sidebar && ( ! isset( $porto_mobile_toggle ) || false !== $porto_mobile_toggle ) ) : ?>
+			       <div class="sidebar-toggle"><i class="fa"></i></div>
+		        <?php endif; ?>
+				<div class="sidebar-content">
+					<div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
+						<?php
+						//	https://paulund.co.uk/get-all-categories-in-wordpress
+						//  $category_id = $categories[0]->cat_ID;
+						$current_category = get_queried_object();
+						$ssidebarMenu = get_term_meta($current_category->term_id, 'tvsPressMB_SidebarMenu', true);
+						$ssidebarMenu = sanitize_text_field($ssidebarMenu);
+						if ($ssidebarMenu) {
+							wp_nav_menu(array("menu" => $ssidebarMenu, 'theme_location' => 'header-top-menu'));
+						}
+						//dynamic_sidebar('tvs-main-sidebar'); ?>
+					</div>
+				</div>
+			</div>
+		</div>
 
+
+	</div>
 	<div class="col-lg-9 main-content">
 		<div id="content" role="main">
 			<?php if (category_description()): ?>
@@ -23,7 +54,7 @@
 					<?php echo category_description(); ?>
 				</div>
 			<?php endif; ?>
-			
+
 
 
 
@@ -75,23 +106,25 @@
 													?>
 
 													<!-- <h2 class="entry-title"><a href="<?php //the_permalink(); ?>"><?php //the_title(); ?></a></h2> -->
-													<h2 class="entry-title"><a  target="_blank" href="<?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressUrl', true); ?>"><?php the_title(); ?></a></h2>
+													<h2 class="entry-title"><a target="_blank"
+															href="<?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressUrl', true); ?>"><?php the_title(); ?></a>
+													</h2>
 													<strong><?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressPublication', true); ?></strong>
 													<br>
-													<strong><?php $date =get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true); 
-													$new_date_format = wp_date( 'l, F j, Y', strtotime( $date ) );
-													echo  $new_date_format;?></strong>
-													
+													<strong><?php $date = get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true);
+													$new_date_format = wp_date('l, F j, Y', strtotime($date));
+													echo $new_date_format; ?></strong>
+
 													<?php
 													porto_render_rich_snippets(false);
 													if (!empty($porto_settings['blog-excerpt'])) {
 														echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-														
+
 													} else {
 
 														echo '<div class="entry-content">';
 														echo porto_the_content();
-														
+
 														wp_link_pages(
 															array(
 																'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -114,9 +147,9 @@
 											</div>
 										</div>
 										<!-- Post meta after content -->
-								
 
-							
+
+
 
 								</article>
 
@@ -138,9 +171,9 @@
 <link rel='stylesheet' href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
 <script src="/wp-content/plugins/tvs-debate/assets/js/glightbox.min.js" id="jquery-mag-js"></script>
 <script>
-    var lightboxInlineIframe = GLightbox({
-      selector: '.debateBox'
-    });
-  </script>
+	var lightboxInlineIframe = GLightbox({
+		selector: '.debateBox'
+	});
+</script>
 <?php
 get_footer();

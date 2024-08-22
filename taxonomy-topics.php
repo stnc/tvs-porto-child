@@ -1,24 +1,60 @@
 <?php get_header();
-require_once ("functions-tvs.php");
+require_once("functions-tvs.php");
+global  $porto_mobile_toggle;
+$sticky_sidebar = porto_meta_sticky_sidebar();
+
+$sticky = "";
+if ($sticky_sidebar) {
+	$sticky = "data-plugin-sticky";
+}
+
+
+$mobile_sidebar = porto_get_meta_value( 'mobile_sidebar' );
+if ( 'yes' == $mobile_sidebar ) {
+	$mobile_sidebar = true;
+} elseif ( 'no' == $mobile_sidebar ) {
+	$mobile_sidebar = false;
+} else {
+	$mobile_sidebar = ! empty( $porto_settings['show-mobile-sidebar'] ) ? true : false;
+}
 
 ?>
 
 
 
 <div class="row">
-	<div class="col-lg-3 sidebar porto-alternative-default left-sidebar mobile-sidebar">
-		<?php
-	   //	https://paulund.co.uk/get-all-categories-in-wordpress
-       //  $category_id = $categories[0]->cat_ID;
-		 $current_category = get_queried_object();
-		 $ssidebarMenu = get_term_meta( $current_category->term_id, 'tvsTopicsMB_SidebarMenu', true );
-		 $ssidebarMenu = sanitize_text_field ($ssidebarMenu);
-	if ($ssidebarMenu){
-		wp_nav_menu( array( "menu"=> $ssidebarMenu,'theme_location' => 'header-top-menu' ) );
-	}
-		//dynamic_sidebar('tvs-main-sidebar'); ?>
-	</div>
 
+<div class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo ! $mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+
+
+<div class="pin-wrapper">
+	<div <?php echo $sticky ?>
+		data-plugin-options="<?php echo esc_attr('{"autoInit": true, "minWidth": 992, "containerSelector": ".main-content-wrap","autoFit":true, "paddingOffsetBottom": 10}'); ?>">
+
+		<?php if ( $mobile_sidebar && ( ! isset( $porto_mobile_toggle ) || false !== $porto_mobile_toggle ) ) : ?>
+			<div class="sidebar-toggle"><i class="fa"></i></div>
+		<?php endif; ?>
+
+
+		<div class="sidebar-content">
+			<div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
+				<?php
+				//	https://paulund.co.uk/get-all-categories-in-wordpress
+				//  $category_id = $categories[0]->cat_ID;
+				$current_category = get_queried_object();
+				$ssidebarMenu = get_term_meta($current_category->term_id, 'tvsTopicsMB_SidebarMenu', true);
+				$ssidebarMenu = sanitize_text_field($ssidebarMenu);
+				if ($ssidebarMenu) {
+					wp_nav_menu(array("menu" => $ssidebarMenu, 'theme_location' => 'header-top-menu'));
+				}
+				//dynamic_sidebar('tvs-main-sidebar'); ?>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</div>
 
 	<div class="col-lg-9 main-content">
 
@@ -33,7 +69,7 @@ require_once ("functions-tvs.php");
 
 
 
-			
+
 			<?php if (have_posts()): ?>
 				<div class="page-debates clearfix">
 					<div class="row debate-row archive-debate-row">
@@ -43,8 +79,7 @@ require_once ("functions-tvs.php");
 							$debate_count++;
 							the_post();
 							?>
-							<div
-								class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
+							<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 								<?php
 								$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
 								$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
@@ -104,7 +139,8 @@ require_once ("functions-tvs.php");
 													}
 													?>
 
-													<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+													<h2 class="entry-title"><a
+															href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
 
 													<?php
@@ -140,7 +176,7 @@ require_once ("functions-tvs.php");
 										}
 										?>
 
-                                       <?php tvs_videoTheme_metabox($debate_count); 	?>
+										<?php tvs_videoTheme_metabox($debate_count); ?>
 								</article>
 
 
@@ -158,13 +194,17 @@ require_once ("functions-tvs.php");
 
 		</div>
 	</div>
+
+
+
+
 </div>
 <link rel='stylesheet' href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
 <script src="/wp-content/plugins/tvs-debate/assets/js/glightbox.min.js" id="jquery-mag-js"></script>
 <script>
-    var lightboxInlineIframe = GLightbox({
-      selector: '.debateBox'
-    });
-  </script>
+	var lightboxInlineIframe = GLightbox({
+		selector: '.debateBox'
+	});
+</script>
 <?php
 get_footer();
