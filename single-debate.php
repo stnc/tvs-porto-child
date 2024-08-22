@@ -34,7 +34,6 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 // adding a 200x200 height and width along with a class to it.
                 //  the_post_thumbnail(array( 200,200 ), array( 'class' => 'alignleft' )); 
                 ?>
-                >-^.qz;NH7j_KQL
                 <?php
                 // Adding a few classes to the medium image
                 the_post_thumbnail('large', array('class' => 'alignleft-'));

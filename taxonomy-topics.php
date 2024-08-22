@@ -6,7 +6,7 @@ require_once ("functions-tvs.php");
 
 
 <div class="row">
-	<div class="col-lg-3">
+	<div class="col-lg-3 sidebar porto-alternative-default left-sidebar mobile-sidebar">
 		<?php
 	   //	https://paulund.co.uk/get-all-categories-in-wordpress
        //  $category_id = $categories[0]->cat_ID;
@@ -20,7 +20,7 @@ require_once ("functions-tvs.php");
 	</div>
 
 
-	<div class="col-lg-9">
+	<div class="col-lg-9 main-content">
 
 		<div id="content" role="main">
 
@@ -44,7 +44,7 @@ require_once ("functions-tvs.php");
 							the_post();
 							?>
 							<div
-								class="col-lg-12  col-md-12 offset-lg-0 offset-md-2 custom-sm-margin-bottom-1 p-b-lg single-debate">
+								class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 								<?php
 								$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
 								$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
