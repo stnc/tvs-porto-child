@@ -1,13 +1,10 @@
 <?php get_header();
-require_once("functions-tvs.php");
 global  $porto_mobile_toggle;
 $sticky_sidebar = porto_meta_sticky_sidebar();
-
 $sticky = "";
 if ($sticky_sidebar) {
 	$sticky = "data-plugin-sticky";
 }
-
 
 $mobile_sidebar = porto_get_meta_value( 'mobile_sidebar' );
 if ( 'yes' == $mobile_sidebar ) {
