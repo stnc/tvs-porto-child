@@ -176,7 +176,7 @@ if ( 'yes' == $mobile_sidebar ) {
 										}
 										?>
 
-										<?php tvs_videoTheme_metabox($debate_count); ?>
+										<?php tvs_videoTheme_metabox($debate_count,get_the_ID()); ?>
 								</article>
 
 

@@ -13,8 +13,6 @@ require_once("functions-tvs.php");
 	<?php endif; ?>
 
 
-
-
 	<?php if (have_posts()): ?>
 		<div class="page-debates clearfix">
 			<div class="row debate-row archive-debate-row">
@@ -23,11 +21,13 @@ require_once("functions-tvs.php");
 				while (have_posts()):
 					$debate_count++;
 					the_post();
+					 $depentPageID = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
 					?>
 					<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 						<?php
-						$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
-						$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
+				
+						$opinionPage = get_post_meta( $depentPageID, 'tvsDebateMB_opinion', true);
+						$transcriptPage = get_post_meta( $depentPageID, 'tvsDebateMB_transcript', true);
 						global $porto_settings;
 
 						$post_layout = 'medium';
@@ -43,7 +43,7 @@ require_once("functions-tvs.php");
 
 						$post_meta .= '<ul class="buttons">';
 						$post_meta .= '<li><a  href="' . get_permalink() . '">Details</a></li>';
-						$post_meta .= tvs_frontpage_metabox(get_the_ID());
+						$post_meta .= tvs_frontpage_metabox( $depentPageID);
 						$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 						$post_meta .= '</ul>';
 						$post_meta .= '</div>';
@@ -92,12 +92,12 @@ require_once("functions-tvs.php");
 											porto_render_rich_snippets(false);
 											if (!empty($porto_settings['blog-excerpt'])) {
 												echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-												tvs_speakersTheme_metabox(get_the_ID());
+												tvs_speakersTheme_metabox( $depentPageID);
 											} else {
 
 												echo '<div class="entry-content">';
 												echo porto_the_content();
-												tvs_speakersTheme_metabox(get_the_ID());
+												tvs_speakersTheme_metabox( $depentPageID);
 												wp_link_pages(
 													array(
 														'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -121,7 +121,7 @@ require_once("functions-tvs.php");
 								}
 								?>
 
-								<?php tvs_videoTheme_metabox($debate_count,get_the_ID()); ?>
+								<?php tvs_videoTheme_metabox($debate_count,$depentPageID); ?>
 						</article>
 
 

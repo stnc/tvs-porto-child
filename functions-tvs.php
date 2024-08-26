@@ -224,7 +224,7 @@ function tvs_wp_pagination($the_query)
 
 function tvs_speakersTheme_metabox($id )
 {
-	$speaker_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_speakerList', true);
+	$speaker_list_db = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list_db, true);
 	// echo "<pre>";
 	// print_r($speaker_list_json);
@@ -279,10 +279,10 @@ function tvs_frontpage_metabox($id)
 
 
 
-function tvs_videoTheme_metabox($count):void
+function tvs_videoTheme_metabox($count,$id):void
 {
 
-$video_list_db = get_post_meta(get_the_ID(), 'tvsDebateMB_videoList', true);
+$video_list_db = get_post_meta($id, 'tvsDebateMB_videoList', true);
 $json_video_list = json_decode($video_list_db, true);
 	//  echo "<pre>";
 	//  print_r($json_video_list);
