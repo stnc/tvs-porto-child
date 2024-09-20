@@ -165,8 +165,8 @@ if ( 'yes' == $mobile_sidebar ) {
 		</div>
 	</div>
 </div>
-<link rel='stylesheet' href='/wp-content/plugins/tvs-debate/assets/css/min/glightbox.min.css' media='all' />
-<script src="/wp-content/plugins/tvs-debate/assets/js/glightbox.min.js" id="jquery-mag-js"></script>
+<script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js" id="jquery-glightbox-js"></script>
+
 <script>
 	var lightboxInlineIframe = GLightbox({
 		selector: '.debateBox'
