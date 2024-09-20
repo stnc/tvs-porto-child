@@ -1,6 +1,6 @@
 <?php get_header();
 require_once("functions-tvs.php");
-global  $porto_mobile_toggle;
+global $porto_mobile_toggle;
 $sticky_sidebar = porto_meta_sticky_sidebar();
 
 $sticky = "";
@@ -9,13 +9,13 @@ if ($sticky_sidebar) {
 }
 
 
-$mobile_sidebar = porto_get_meta_value( 'mobile_sidebar' );
-if ( 'yes' == $mobile_sidebar ) {
+$mobile_sidebar = porto_get_meta_value('mobile_sidebar');
+if ('yes' == $mobile_sidebar) {
 	$mobile_sidebar = true;
-} elseif ( 'no' == $mobile_sidebar ) {
+} elseif ('no' == $mobile_sidebar) {
 	$mobile_sidebar = false;
 } else {
-	$mobile_sidebar = ! empty( $porto_settings['show-mobile-sidebar'] ) ? true : false;
+	$mobile_sidebar = !empty($porto_settings['show-mobile-sidebar']) ? true : false;
 }
 
 ?>
@@ -24,37 +24,38 @@ test
 
 <div class="row">
 
-<div class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo ! $mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+	<div
+		class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
 
 
-<div class="pin-wrapper">
-	<div <?php echo $sticky ?>
-		data-plugin-options="<?php echo esc_attr('{"autoInit": true, "minWidth": 992, "containerSelector": ".main-content-wrap","autoFit":true, "paddingOffsetBottom": 10}'); ?>">
+		<div class="pin-wrapper">
+			<div <?php echo $sticky ?>
+				data-plugin-options="<?php echo esc_attr('{"autoInit": true, "minWidth": 992, "containerSelector": ".main-content-wrap","autoFit":true, "paddingOffsetBottom": 10}'); ?>">
 
-		<?php if ( $mobile_sidebar && ( ! isset( $porto_mobile_toggle ) || false !== $porto_mobile_toggle ) ) : ?>
-			<div class="sidebar-toggle"><i class="fa"></i></div>
-		<?php endif; ?>
+				<?php if ($mobile_sidebar && (!isset($porto_mobile_toggle) || false !== $porto_mobile_toggle)): ?>
+					<div class="sidebar-toggle"><i class="fa"></i></div>
+				<?php endif; ?>
 
 
-		<div class="sidebar-content">
-			<div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
-				<?php
-				//	https://paulund.co.uk/get-all-categories-in-wordpress
-				//  $category_id = $categories[0]->cat_ID;
-				$current_category = get_queried_object();
-				$ssidebarMenu = get_term_meta($current_category->term_id, 'tvsTopicsMB_SidebarMenu', true);
-				$ssidebarMenu = sanitize_text_field($ssidebarMenu);
-				if ($ssidebarMenu) {
-					wp_nav_menu(array("menu" => $ssidebarMenu, 'theme_location' => 'header-top-menu'));
-				}
-				//dynamic_sidebar('tvs-main-sidebar'); ?>
+				<div class="sidebar-content">
+					<div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
+						<?php
+						//	https://paulund.co.uk/get-all-categories-in-wordpress
+						//  $category_id = $categories[0]->cat_ID;
+						$current_category = get_queried_object();
+						$ssidebarMenu = get_term_meta($current_category->term_id, 'tvsTopicsMB_SidebarMenu', true);
+						$ssidebarMenu = sanitize_text_field($ssidebarMenu);
+						if ($ssidebarMenu) {
+							wp_nav_menu(array("menu" => $ssidebarMenu, 'theme_location' => 'header-top-menu'));
+						}
+						//dynamic_sidebar('tvs-main-sidebar'); ?>
+					</div>
+				</div>
 			</div>
 		</div>
+
+
 	</div>
-</div>
-
-
-</div>
 
 	<div class="col-lg-9 main-content">
 
@@ -74,6 +75,14 @@ test
 				<div class="page-debates clearfix">
 					<div class="row debate-row archive-debate-row">
 						<?php
+						$AjaxOptions = get_option('tvsDebate_CommonSettings');
+						$tvsDebate_usedAjax = $AjaxOptions["tvsDebate_usedAjax"];
+						if ($tvsDebate_usedAjax == "yes") {
+							$link = '<li><a class="ajax-popup" href="http://debates.test/debateModal?debateid=' . get_the_ID() . '">Details</a></li>';
+						} else {
+							$link = '<li><a  href="' . get_permalink() . '">Details</a></li>';
+						}
+
 						$debate_count = 0;
 						while (have_posts()):
 							$debate_count++;
@@ -97,8 +106,8 @@ test
 								$post_meta .= '<div class="post-meta ' . (empty($porto_settings['post-metas']) ? ' d-none' : '') . '">';
 
 								$post_meta .= '<ul class="buttons">';
-								$post_meta .= '<li><a class="simple-ajax-popup-align-top" href="' . get_permalink() . '">Details</a></li>';
-								$post_meta .= tvs_frontpage_metabox(get_the_ID());
+								$post_meta .= $link;
+							 $post_meta .= tvs_frontpage_metabox(get_the_ID());
 								$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 								$post_meta .= '</ul>';
 								$post_meta .= '</div>';
@@ -176,7 +185,7 @@ test
 										}
 										?>
 
-										<?php tvs_videoTheme_metabox($debate_count,get_the_ID()); ?>
+										<?php tvs_videoTheme_metabox($debate_count, get_the_ID()); ?>
 								</article>
 
 
@@ -206,18 +215,18 @@ test
 		selector: '.debateBox'
 	});
 
-	jQuery(document).ready(function() {
+	jQuery(document).ready(function () {
 
-        jQuery('.simple-ajax-popup-align-top').magnificPopup({
-          type: 'ajax',
-          alignTop: true,
-          overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
-        });
+		jQuery('.ajax-popup').magnificPopup({
+			type: 'ajax',
+			alignTop: true,
+			overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
+		});
 
 
-        
-      });
-    </script>
+
+	});
+</script>
 
 <?php
 get_footer();
