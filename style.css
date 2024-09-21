@@ -457,3 +457,35 @@ Tags: woocommerce, corporate, ecommerce, responsive, blue, black, green, white, 
   }
   
   /*# sourceMappingURL=magnific-popup.css.map */
+
+
+
+  .modalbox-block {
+    background: #fff;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 800px;
+    margin: 40px auto;
+    position: relative;
+  }
+
+  .closeModallBTN {
+    background: #FFC107;
+    width: 200px;
+    display: block;
+    margin: auto;
+    height: 53px;
+    text-align: center;
+    line-height: 53px;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 2px solid #eee;
+    color: #000;
+  }
+
+.tvs-modal-title{
+  display: block;
+  margin: auto;
+  text-align: center;
+}

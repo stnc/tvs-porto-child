@@ -1,5 +1,5 @@
 <?php get_header();
-require_once("functions-tvs.php");
+require_once("functions-tvs-porto-child.php");
 global $porto_mobile_toggle;
 $sticky_sidebar = porto_meta_sticky_sidebar();
 
@@ -19,8 +19,6 @@ if ('yes' == $mobile_sidebar) {
 }
 
 ?>
-
-test
 
 <div class="row">
 
@@ -77,16 +75,18 @@ test
 						<?php
 						$AjaxOptions = get_option('tvsDebate_CommonSettings');
 						$tvsDebate_usedAjax = $AjaxOptions["tvsDebate_usedAjax"];
-						if ($tvsDebate_usedAjax == "yes") {
-							$link = '<li><a class="ajax-popup" href="http://debates.test/debateModal?debateid=' . get_the_ID() . '">Details</a></li>';
-						} else {
-							$link = '<li><a  href="' . get_permalink() . '">Details</a></li>';
-						}
 
 						$debate_count = 0;
 						while (have_posts()):
 							$debate_count++;
 							the_post();
+							if ($tvsDebate_usedAjax == "yes") {
+								$debate_link = '<li><a class="ajax-popup"  href="' . get_permalink() . '#tvs-modal" data-url="/debateModal?debateid=' . get_the_ID() . '#tvs-modal">Details</a></li>';
+								//$debate_link = '<li><a class="ajax-popup"  href="/debateModal?debateid=' . get_the_ID() . '">Details</a></li>';
+							} else {
+								$debate_link = '<li><a  href="' . get_permalink() . '">Details</a></li>';
+							}
+
 							?>
 							<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 								<?php
@@ -106,8 +106,8 @@ test
 								$post_meta .= '<div class="post-meta ' . (empty($porto_settings['post-metas']) ? ' d-none' : '') . '">';
 
 								$post_meta .= '<ul class="buttons">';
-								$post_meta .= $link;
-							 $post_meta .= tvs_frontpage_metabox(get_the_ID());
+								$post_meta .= $debate_link;
+								$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
 								$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 								$post_meta .= '</ul>';
 								$post_meta .= '</div>';
@@ -142,7 +142,7 @@ test
 
 													<?php
 
-													// gerek yok ??? 
+
 													if (is_sticky() && is_home() && !is_paged()) {
 														printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 													}
@@ -205,28 +205,11 @@ test
 	</div>
 
 
-
-
 </div>
-<script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js" id="jquery-glightbox-js"></script>
-
-<script>
-	var lightboxInlineIframe = GLightbox({
-		selector: '.debateBox'
-	});
-
-	jQuery(document).ready(function () {
-
-		jQuery('.ajax-popup').magnificPopup({
-			type: 'ajax',
-			alignTop: true,
-			overflowY: 'scroll' // as we know that popup content is tall we set scroll overflow by default to avoid jump
-		});
 
 
+<?php require_once("footerJs.php");  ?>
 
-	});
-</script>
 
 <?php
 get_footer();

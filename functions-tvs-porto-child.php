@@ -14,7 +14,7 @@
  */
 function tvs_kama_paginate_links_data(array $args): array
 {
-	
+
 	global $wp_query;
 
 	$args += [
@@ -219,21 +219,22 @@ function tvs_wp_pagination($the_query)
 			'prev_text' => __('← Previous'),
 			'next_text' => __('Next  →'),
 			// 'type'  => 'list',
-		));
+		)
+	);
 }
 
-function tvs_speakersTheme_metabox($id )
+function tvs_speakersTheme_metabox($id)
 {
 	$speaker_list_db = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list_db, true);
 	// echo "<pre>";
 	// print_r($speaker_list_json);
-	if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0) :
+	if ($speaker_list_json[0]["speaker"] != "0" || $speaker_list_json[0]["speaker"] != 0):
 		echo '<ul style="border:1px solid black;list-style-type: none;">';
-		$spekerLink="";
+		$spekerLink = "";
 		foreach ($speaker_list_json as $key => $json_speaker) {
-			$spekerLink=get_the_permalink($json_speaker["speaker"]);
-			$spekerLink='<a style="color:#777777;text-decoration: underline;" href="'.$spekerLink.'">'.get_the_title($json_speaker["speaker"]).'</a>';
+			$spekerLink = get_the_permalink($json_speaker["speaker"]);
+			$spekerLink = '<a style="color:#777777;text-decoration: underline;" href="' . $spekerLink . '">' . get_the_title($json_speaker["speaker"]) . '</a>';
 			if (1 == $json_speaker["opinions"])
 				$opinions = "FOR";
 
@@ -246,7 +247,7 @@ function tvs_speakersTheme_metabox($id )
 		echo ' </ul>';
 	endif;
 }
-function tvs_frontpage_metabox($id)
+function tvs_frontpage_metabox($id, $method)
 {
 	$transcriptUrl = "";
 	$opinionUrl = "";
@@ -257,19 +258,38 @@ function tvs_frontpage_metabox($id)
 
 	$speaker_list = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list, true);
-// 	echo "<pre>";
+	// 	echo "<pre>";
 // var_dump(	$speaker_list_json);
 // print_r( $speaker_list_json["speaker"]);
 	if ($speaker_list_json[0]["speaker"] != "0") {
-		$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
+		if ($method == "yes") {
+			 $speaker = '<li><a class="ajax-popup" href="'.  get_home_url().'/speakers?list=' . $id . '#tvs-modal" data-url="'.  get_home_url().'/speakersModal?list=' . $id . '#tvs-modal">Speakers</a></li>';
+			//$speaker = '<li><a class="ajax-popup"  href="/speakersModal?list=' . $id . '">Speakers</a></li>';
+		} else {
+			$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
+		}
 	}
 
 	if ($transcriptPage != "0") {
-		$transcriptUrl = '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
+		if ($method == "yes") {
+			 $transcriptUrl = '<li><a class="ajax-popup" href="' . get_permalink($transcriptPage) . '#tvs-modal" data-url="'.  get_home_url().'/transcriptModal?transcriptid=' . $transcriptPage . '#tvs-modal">Transcript</a></li>';
+		//	$transcriptUrl = '<li><a class="ajax-popup" href="/transcriptModal?transcriptid=' . $transcriptPage . '">Transcript</a></li>';
+
+		} else {
+			$transcriptUrl = '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
+
+		}
 	}
 
 	if ($opinionPage != "0") {
-		$opinionUrl = '<li><a  href="' . get_permalink($opinionPage) . '">Opinion poll</a></li>';
+		if ($method == "yes") {
+			$opinionUrl = '<li><a class="ajax-popup"  href="' . get_permalink($opinionPage) . '#tvs-modal"  data-url="'.  get_home_url().'/OpinionModal?opinionid=' . $opinionPage . '#tvs-modal">Opinion Poll</a></li>';
+			//$opinionUrl = '<li><a class="ajax-popup"  href="/OpinionModal?opinionid=' . $opinionPage . '">Transcript</a></li>';
+
+		} else {
+			$opinionUrl = '<li><a  href="' . get_permalink($opinionPage) . '">Opinion Poll</a></li>';
+
+		}
 	}
 
 	return $transcriptUrl . $speaker . $opinionUrl;
@@ -279,61 +299,60 @@ function tvs_frontpage_metabox($id)
 
 
 
-function tvs_videoTheme_metabox($count,$id):void
+function tvs_videoTheme_metabox($count, $id): void
 {
 
-$video_list_db = get_post_meta($id, 'tvsDebateMB_videoList', true);
-$json_video_list = json_decode($video_list_db, true);
+	$video_list_db = get_post_meta($id, 'tvsDebateMB_videoList', true);
+	$json_video_list = json_decode($video_list_db, true);
 	//  echo "<pre>";
 	//  print_r($json_video_list);
 
-if (!$json_video_list || $json_video_list[0]["title"] != "Later (Not Clear Yet)" ):
-?>
-<div class="container">
-<h4 class="fw-light">Videos</h4>
-	<div class="row row-cols-2 row-cols-sm-4 row-cols-md-6 g-3">
-		<?php
-		foreach ($json_video_list as $key => $video):
-			$src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
-			?>
-			<div class="col">
-				<div class="card- shadow-sm-">
-					<a href="#inline-video<?php echo $count.$key ?>" class="debateBox"
-						data-glightbox="width: 700; height: auto;" > 
-						<?php if (!empty($src)): ?>
-							<img src="<?php echo $src[0] ?>"
-								style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
-								alt="<?php echo $video["title"] ?>" />
-						<?php endif ?>
-						<span class="w-100 float-left"> 	<?php echo $video["title"] ?>  </span>
-					</a>
+	if (!$json_video_list || $json_video_list[0]["title"] != "Later (Not Clear Yet)"):
+		?>
+		<div class="container">
+			<h4 class="fw-light">Videos</h4>
+			<div class="row row-cols-2 row-cols-sm-4 row-cols-md-6 g-3">
+				<?php
+				foreach ($json_video_list as $key => $video):
+					$src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
+					?>
+					<div class="col">
+						<div class="card- shadow-sm-">
+							<a href="#inline-video<?php echo $count . $key ?>" class="debateBox"
+								data-glightbox="width: 700; height: auto;">
+								<?php if (!empty($src)): ?>
+									<img src="<?php echo $src[0] ?>"
+										style="max-width:none!important; height: 120px !important; width: 120px !important; padding:2px"
+										alt="<?php echo $video["title"] ?>" />
+								<?php endif ?>
+								<span class="w-100 float-left"> <?php echo $video["title"] ?> </span>
+							</a>
 
-					<div id="inline-video<?php echo $count.$key ?>" style="display: none">
-						<div class="inline-inner">
-						<h4 class="text-center">	<?php echo $video["title"] ?> </h4>
-							<div class="text-center">
+							<div id="inline-video<?php echo $count . $key ?>" style="display: none">
+								<div class="inline-inner">
+									<h4 class="text-center"> <?php echo $video["title"] ?> </h4>
+									<div class="text-center">
 
-								<iframe width="600" height="400"
-									src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
-									title="YouTube video player" frameborder="0"
-									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-									referrerpolicy="strict-origin-when-cross-origin"
-									allowfullscreen></iframe>
-								<p>
-									<?php echo $video["description"] ?>
-								</p>
+										<iframe width="600" height="400"
+											src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
+											title="YouTube video player" frameborder="0"
+											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+											referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<p>
+											<?php echo $video["description"] ?>
+										</p>
+									</div>
+									<a class="gtrigger-close inline-close-btn" href="#">Close</a>
+								</div>
 							</div>
-							<a class="gtrigger-close inline-close-btn" href="#">Close</a>
 						</div>
+
 					</div>
-				</div>
-
+				<?php endforeach; ?>
 			</div>
-		<?php endforeach; ?>
-	</div>
-</div> 
-<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
 
-<?php
+	<?php
 }

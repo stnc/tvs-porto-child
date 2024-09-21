@@ -1,5 +1,5 @@
 <?php get_header();
-require_once("functions-tvs.php");
+require_once("functions-tvs-porto-child.php");
 
 ?>
 
@@ -17,17 +17,27 @@ require_once("functions-tvs.php");
 		<div class="page-debates clearfix">
 			<div class="row debate-row archive-debate-row">
 				<?php
+				$AjaxOptions = get_option('tvsDebate_CommonSettings');
+				$tvsDebate_usedAjax = $AjaxOptions["tvsDebate_usedAjax"];
 				$debate_count = 0;
+
 				while (have_posts()):
 					$debate_count++;
 					the_post();
-					 $depentPageID = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
+					$depentPageID = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
+					if ($tvsDebate_usedAjax == "yes") {
+						$debate_link = '<li><a class="ajax-popup"  href="' . get_permalink() . '#tvs-modal" data-url="/debateModal?debateid=' . get_the_ID() . '#tvs-modal">Details</a></li>';
+						//$debate_link = '<li><a class="ajax-popup"  href="/debateModal?debateid=' . get_the_ID() . '">Details</a></li>';
+					} else {
+						$debate_link = '<li><a  href="' . get_permalink() . '">Details</a></li>';
+					}
+
 					?>
 					<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 						<?php
-				
-						$opinionPage = get_post_meta( $depentPageID, 'tvsDebateMB_opinion', true);
-						$transcriptPage = get_post_meta( $depentPageID, 'tvsDebateMB_transcript', true);
+
+						$opinionPage = get_post_meta($depentPageID, 'tvsDebateMB_opinion', true);
+						$transcriptPage = get_post_meta($depentPageID, 'tvsDebateMB_transcript', true);
 						global $porto_settings;
 
 						$post_layout = 'medium';
@@ -42,8 +52,8 @@ require_once("functions-tvs.php");
 						$post_meta .= '<div class="post-meta ' . (empty($porto_settings['post-metas']) ? ' d-none' : '') . '">';
 
 						$post_meta .= '<ul class="buttons">';
-						$post_meta .= '<li><a  href="' . get_permalink() . '">Details</a></li>';
-						$post_meta .= tvs_frontpage_metabox( $depentPageID);
+						$post_meta .= $debate_link;
+						$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
 						$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 						$post_meta .= '</ul>';
 						$post_meta .= '</div>';
@@ -92,12 +102,12 @@ require_once("functions-tvs.php");
 											porto_render_rich_snippets(false);
 											if (!empty($porto_settings['blog-excerpt'])) {
 												echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-												tvs_speakersTheme_metabox( $depentPageID);
+												tvs_speakersTheme_metabox($depentPageID);
 											} else {
 
 												echo '<div class="entry-content">';
 												echo porto_the_content();
-												tvs_speakersTheme_metabox( $depentPageID);
+												tvs_speakersTheme_metabox($depentPageID);
 												wp_link_pages(
 													array(
 														'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -121,7 +131,7 @@ require_once("functions-tvs.php");
 								}
 								?>
 
-								<?php tvs_videoTheme_metabox($debate_count,$depentPageID); ?>
+								<?php tvs_videoTheme_metabox($debate_count, $depentPageID); ?>
 						</article>
 
 
@@ -141,15 +151,8 @@ require_once("functions-tvs.php");
 
 
 
+<?php require_once("footerJs.php");  ?>
 
 
-
-<script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js" id="jquery-glightbox-js"></script>
-
-<script>
-	var lightboxInlineIframe = GLightbox({
-		selector: '.debateBox'
-	});
-</script>
 <?php
 get_footer();

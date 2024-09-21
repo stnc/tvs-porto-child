@@ -53,14 +53,15 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
               // foreach ( $terms as $value ) {
               //     $group[$value['parent']][] = $value;
               // }
-            //  print_r($terms);     
+              //  print_r($terms);     
               // print_r($group);     
               foreach ($terms as $value):
-                if ( $value->parent==0):
-                ?>
-                <li class="list-group-item"> <a href="<?php get_permalink($value->term_id); ?>"><?php echo $value->name; ?></a>
-                </li>
-              <?php endif ?>
+                if ($value->parent == 0):
+                  ?>
+                  <li class="list-group-item"> <a
+                      href="<?php get_permalink($value->term_id); ?>"><?php echo $value->name; ?></a>
+                  </li>
+                <?php endif ?>
               <?php endforeach ?>
 
 
@@ -168,11 +169,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                   </div>
                 </div>
               <?php endif; ?>
-
-
-
             </div>
-
 
           </div>
           <div class="col-lg-7">
@@ -182,9 +179,11 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
       <?php endif; ?>
     </div>
   <?php } ?>
- 
-  <script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js" id="jquery-glightbox-js"></script>
+  </div>
   
+  <script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js"
+    id="jquery-glightbox-js"></script>
+
   <script>
     var lightboxInlineIframe = GLightbox({
       selector: '.debateBox'
