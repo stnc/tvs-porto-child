@@ -1,4 +1,4 @@
-<div id="tvs-modal" class="modalbox-block mfp-hide"></div>
+<div class="modalbox-block mfp-fade mfp-hide"></div>
 <script src="<?php echo get_stylesheet_directory_uri() ?>/assets/js/glightbox.min.js" id="jquery-glightbox-js"></script>
 <script>
 	var lightboxInlineIframe = GLightbox({
@@ -21,7 +21,7 @@
 						type: 'inline',
 						midClick: true,
 						mainClass: 'mfp-fade',
-						closeOnBgClick: false ,
+						closeOnBgClick: true ,
 						removalDelay: 500, //delay removal by X to allow out-animation
 						items: {
 							src: data
