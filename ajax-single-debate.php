@@ -1,7 +1,7 @@
 <?php
 $the_query = new WP_Query(
     array(
-        'posts_per_page' => 4,
+        'posts_per_page' => 1,
         'post_type' => 'debate',
         'post_status' => 'publish',
         'p' => get_query_var('debateid'),
@@ -26,9 +26,6 @@ $the_query = new WP_Query(
     </div>
 
     <a class="closeModallBTN" href="#">Close</a>
-
-
-    <?php the_content(); ?>
 
 
     <script id="poll-maker-ays-ajax-public-js-extra">

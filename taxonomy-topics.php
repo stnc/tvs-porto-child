@@ -147,7 +147,7 @@ if ('yes' == $mobile_sidebar) {
 														printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 													}
 													?>
-
+											<div class="datetime"><strong><?php the_time( 'l, j F Y' ); ?></strong></div>
 													<h2 class="entry-title"><a
 															href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 

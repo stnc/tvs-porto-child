@@ -25,12 +25,9 @@ require_once("functions-tvs-porto-child.php");
 					$debate_count++;
 					the_post();
 					$depentPageID = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
-					if ($tvsDebate_usedAjax == "yes") {
-						$debate_link = '<li><a class="ajax-popup"  href="' . get_permalink() . '#tvs-modal" data-url="/debateModal?debateid=' . get_the_ID() . '#tvs-modal">Details</a></li>';
-						//$debate_link = '<li><a class="ajax-popup"  href="/debateModal?debateid=' . get_the_ID() . '">Details</a></li>';
-					} else {
-						$debate_link = '<li><a  href="' . get_permalink() . '">Details</a></li>';
-					}
+	
+					
+					
 
 					?>
 					<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
@@ -52,8 +49,8 @@ require_once("functions-tvs-porto-child.php");
 						$post_meta .= '<div class="post-meta ' . (empty($porto_settings['post-metas']) ? ' d-none' : '') . '">';
 
 						$post_meta .= '<ul class="buttons">';
-						$post_meta .= $debate_link;
-						$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
+						$post_meta .=  '<li><a class="go" href="' . get_permalink() . '">Full Report</a></li>';
+					//	$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
 						$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 						$post_meta .= '</ul>';
 						$post_meta .= '</div>';
@@ -88,12 +85,11 @@ require_once("functions-tvs-porto-child.php");
 
 											<?php
 
-											// gerek yok ??? 
 											if (is_sticky() && is_home() && !is_paged()) {
 												printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 											}
 											?>
-
+											<div class="datetime"><strong><?php the_time( 'j F Y' ); ?></strong></div>
 											<h2 class="entry-title"><a
 													href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
@@ -102,12 +98,12 @@ require_once("functions-tvs-porto-child.php");
 											porto_render_rich_snippets(false);
 											if (!empty($porto_settings['blog-excerpt'])) {
 												echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
-												tvs_speakersTheme_metabox($depentPageID);
+												//tvs_speakersTheme_metabox($depentPageID);
 											} else {
 
 												echo '<div class="entry-content">';
 												echo porto_the_content();
-												tvs_speakersTheme_metabox($depentPageID);
+												//tvs_speakersTheme_metabox($depentPageID);
 												wp_link_pages(
 													array(
 														'before' => '<div class="page-links"><span class="page-links-title">' . esc_html__('Pages:', 'porto') . '</span>',
@@ -131,7 +127,7 @@ require_once("functions-tvs-porto-child.php");
 								}
 								?>
 
-								<?php tvs_videoTheme_metabox($debate_count, $depentPageID); ?>
+								<?php //tvs_videoTheme_metabox($debate_count, $depentPageID); ?>
 						</article>
 
 
