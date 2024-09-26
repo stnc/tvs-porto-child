@@ -174,6 +174,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           </div>
           <div class="col-lg-7">
             <?php the_content(); ?>
+            <?php include "social-share.php" ?>
           </div>
         </div>
       <?php endif; ?>

@@ -147,9 +147,10 @@ if ('yes' == $mobile_sidebar) {
 														printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 													}
 													?>
-											<div class="datetime"><strong><?php the_time( 'l, j F Y' ); ?></strong></div>
-													<h2 class="entry-title"><a
-															href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+													<div class="datetime"><strong><?php the_time('l, j F Y'); ?></strong>
+													</div>
+
+										<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
 
 													<?php
@@ -186,6 +187,8 @@ if ('yes' == $mobile_sidebar) {
 										?>
 
 										<?php tvs_videoTheme_metabox($debate_count, get_the_ID()); ?>
+										<?php //include "social-share.php" ?>
+
 								</article>
 
 
@@ -208,7 +211,7 @@ if ('yes' == $mobile_sidebar) {
 </div>
 
 
-<?php require_once("footerJs.php");  ?>
+<?php require_once("footerJs.php"); ?>
 
 
 <?php

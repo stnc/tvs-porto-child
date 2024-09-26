@@ -322,3 +322,12 @@ a.go {
   font-size: 13px;
   border: solid 1px #972b2b;
 }
+
+/*breadcrumb*/
+
+
+.page-top ul.breadcrumb > li a {
+  display: inline-block;
+  border-color: transparent;
+  background: transparent;
+}
