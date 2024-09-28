@@ -56,17 +56,20 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     if ($ssidebarMenu) {
                       wp_nav_menu(array("menu" => $ssidebarMenu, 'theme_location' => 'header-top-menu'));
                     }
-                    //dynamic_sidebar('tvs-main-sidebar'); ?>
+                    //dynamic_sidebar('tvs-main-sidebar'); 
+                    ?>
                   </div>
+
+                  
                   <?php
-               	 $tvsDebateCommonSettings = get_option('tvsDebate_CommonSettings');
-                 $tvsDebate_usedAjax = $tvsDebateCommonSettings["tvsDebate_usedAjax"];
-                ?>
+                  $tvsDebateCommonSettings = get_option('tvsDebate_CommonSettings');
+                  $tvsDebate_usedAjax = $tvsDebateCommonSettings["tvsDebate_usedAjax"];
+                  ?>
                   <div class="post-meta ">
-                      <ul class="buttons">
-                      <?php echo  tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);   ?>
-                      </ul>
-                    </div>
+                    <ul class="buttons">
+                      <?php echo tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax); ?>
+                    </ul>
+                  </div>
 
                   <!-- featured-image starts-->
                   <div class="featured-image" style="margin-bottom: 10px">
@@ -91,15 +94,13 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                   </div>
                   <!-- featured-image ends-->
 
-                  
-            
+
+
                   <?php
                   $tvsDebateCommonSettings = get_option('tvsDebate_spdSettings');
                   $tvsDebateShowRelatedCategory = $tvsDebateCommonSettings["tvsDebate_ShowRelatedCategory"];
                   if ($tvsDebateShowRelatedCategory == "yes"):
-                    ?>
-
-                
+                  ?>
                     <!-- RelatedCategories starts-->
                     <ul class="list-group RelatedCategories" style="margin-bottom:10px">
                       <li class="list-group-item text-center"> <strong>Related Categories</strong> </li>
@@ -126,6 +127,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     <!-- RelatedCategories ends-->
                   <?php endif ?>
 
+                
                   <!-- accordion starts-->
                   <div class="accordion accordion-flush------" id="accordionSingleDebate">
                     <?php
@@ -232,6 +234,8 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     <?php endif; ?>
                   </div>
                   <!-- accordion ends-->
+             
+                  
                 </div>
               </div>
             </div>
