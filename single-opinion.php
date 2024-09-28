@@ -32,7 +32,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
     <?php
     if (have_posts()):
       the_post();
-      $transcriptID = $post->ID;
+       $opinionID = $post->ID;
       ?>
 
       <?php porto_render_rich_snippets(); ?>
@@ -42,8 +42,10 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           <div   class="col-lg-5 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
 
             <?php
-            $tvsDebateMB_relatedDebateID = get_post_meta($transcriptID, 'tvsDebateMB_relatedDebateID', true);
-            // print_r($tvsDebateMB_relatedDebateID);
+ 
+            $tvsDebateMB_relatedDebateID = get_post_meta($opinionID, 'tvsDebateMB_relatedDebateID', true );
+          //   print_r($tvsDebateMB_relatedDebateID);
+        //  var_dump($tvsDebateMB_relatedDebateID);
             ?>
 
             <div class="pin-wrapper">
@@ -55,7 +57,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                 <div class="sidebar-content">
 
 
-                  <?php if ($tvsDebateMB_relatedDebateID != "0"): ?>
+                  <?php if ($tvsDebateMB_relatedDebateID != "0" ): ?>
                     <div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
                       <?php
                       $ssidebarMenu = get_post_meta($tvsDebateMB_relatedDebateID, 'tvsDebateMB_sidebar', true);
@@ -71,7 +73,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     $tvsDebateCommonSettings = get_option('tvsDebate_CommonSettings');
                     $tvsDebate_usedAjax = $tvsDebateCommonSettings["tvsDebate_usedAjax"];
                     ?>
-                    <div class="post-meta">
+                    <div class="post-meta ">
                       <ul class="buttons">
                           <li><a  href=" <?php echo get_permalink($tvsDebateMB_relatedDebateID)  ?>">Debate Page</a></li>
                         <?php echo tvs_frontpage_metabox($tvsDebateMB_relatedDebateID, $tvsDebate_usedAjax); ?>
@@ -87,7 +89,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                       the_post_thumbnail('large', array('class' => 'alignleft-'));
                       ?>
                     <?php else: ?>
-                      <?php $url = wp_get_attachment_url(get_post_thumbnail_id($transcriptID), 'full'); ?>
+                      <?php $url = wp_get_attachment_url(get_post_thumbnail_id($opinionID), 'full'); ?>
                       <img src="<?php echo $url ?>" />
                     <?php endif ?>
                   </div>
