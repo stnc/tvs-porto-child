@@ -73,8 +73,8 @@ if ('yes' == $mobile_sidebar) {
 				<div class="page-debates clearfix">
 					<div class="row debate-row archive-debate-row">
 						<?php
-						$AjaxOptions = get_option('tvsDebate_CommonSettings');
-						$tvsDebate_usedAjax = $AjaxOptions["tvsDebate_usedAjax"];
+						$tvsDebateCommonSettings = get_option('tvsDebate_CommonSettings');
+						$tvsDebate_usedAjax = $tvsDebateCommonSettings["tvsDebate_usedAjax"];
 
 						$debate_count = 0;
 						while (have_posts()):

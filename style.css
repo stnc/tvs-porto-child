@@ -331,3 +331,21 @@ a.go {
   border-color: transparent;
   background: transparent;
 }
+
+
+.single-debate-content .post-meta  {
+  margin-top: -3px;
+}
+
+
+.single-debate-content .post-meta ul.buttons {
+  list-style: none;
+  margin: inherit;
+  float: left;
+  width: 100%;
+  clear: both;
+  margin: 10px 0 20px;
+  background-color: #0C6291 !important;
+  padding: 7px;
+  margin-bottom: 10px;
+}
