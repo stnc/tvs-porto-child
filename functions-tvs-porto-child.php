@@ -259,7 +259,7 @@ function tvs_frontpage_metabox($id, $method)
 	$speaker_list = get_post_meta($id, 'tvsDebateMB_speakerList', true);
 	$speaker_list_json = json_decode($speaker_list, true);
 	// 	echo "<pre>";
-// var_dump(	$speaker_list_json);
+//  var_dump(	$speaker_list_json);
 // print_r( $speaker_list_json["speaker"]);
 	if ($speaker_list_json[0]["speaker"] != "0") {
 		if ($method == "yes") {

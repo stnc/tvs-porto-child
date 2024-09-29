@@ -21,7 +21,7 @@
 						type: 'inline',
 						midClick: true,
 						mainClass: 'mfp-fade',
-						closeOnBgClick: true ,
+						closeOnBgClick: false ,
 						removalDelay: 500, //delay removal by X to allow out-animation
 						items: {
 							src: data
