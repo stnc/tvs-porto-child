@@ -247,7 +247,7 @@ function tvs_speakersTheme_metabox($id)
 		echo ' </ul>';
 	endif;
 }
-function tvs_frontpage_metabox($id, $method, $hide="all")
+function tvs_frontpage_metabox($id, $method, $hide="none")
 {
 	$transcriptUrl = "";
 	$opinionUrl = "";
