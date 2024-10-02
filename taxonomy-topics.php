@@ -90,8 +90,7 @@ if ('yes' == $mobile_sidebar) {
 							?>
 							<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 								<?php
-								$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
-								$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
+						
 								global $porto_settings;
 
 								$post_layout = 'medium';
@@ -130,6 +129,26 @@ if ('yes' == $mobile_sidebar) {
 														$url = wp_get_attachment_url(get_post_thumbnail_id($debateID), 'full'); ?>
 														<img src="<?php echo $url ?>" />
 													<?php endif ?>
+													<br>
+													<br>
+
+													<?php 
+													$motionPassed = get_post_meta( get_the_ID(), 'tvsDebateMB_motionPassed', true );
+													if ($motionPassed != "") :  ?>
+													<strong>MOTION PASSED : </strong><?php  echo $motionPassed  ?> <br>
+													<?php endif ?>
+
+													<?php 
+													$broadcastDate = get_post_meta( get_the_ID(), 'tvsDebateMB_broadcast_date', true );
+													if ($broadcastDate != "") :  ?>
+													<strong>Broadcast:  </strong> <?php  echo $broadcastDate  ?>  <br>
+													<?php endif ?>
+
+													<?php 
+													$venue = get_post_meta( get_the_ID(), 'tvsDebateMB_venue', true );
+													if ($venue != "") :  ?>
+													<strong>Venue:</strong> <?php  echo $venue  ?>   
+													<?php endif ?>
 												</div>
 											</div>
 											<div class="col-lg-7">
@@ -147,8 +166,13 @@ if ('yes' == $mobile_sidebar) {
 														printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 													}
 													?>
-													<div class="datetime"><strong><?php the_time('l, j F Y'); ?></strong>
-													</div>
+												<?php //the_time('l, j F Y'); 
+												 $date = get_post_meta( get_the_ID(), 'tvsDebateMB_date', true );
+												 $WpDateFormat= get_option( 'date_format' );
+												 $WpDateFormat= date($WpDateFormat, strtotime($date));
+												?>
+
+												<div class="datetime"><strong><?php echo  $WpDateFormat ?></strong></div>
 
 										<h2 class="entry-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
@@ -158,6 +182,10 @@ if ('yes' == $mobile_sidebar) {
 													if (!empty($porto_settings['blog-excerpt'])) {
 														echo porto_get_excerpt($porto_settings['blog-excerpt-length'], false);
 														tvs_speakersTheme_metabox(get_the_ID());
+														?>
+									
+
+											<?php
 													} else {
 
 														echo '<div class="entry-content">';

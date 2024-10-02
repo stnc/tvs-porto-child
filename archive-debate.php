@@ -35,10 +35,7 @@ require_once("functions-tvs-porto-child.php");
 					?>
 					<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 						<?php
-						$opinionPage = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
-						$transcriptPage = get_post_meta(get_the_ID(), 'tvsDebateMB_transcript', true);
 						global $porto_settings;
-
 						$post_layout = 'medium';
 						$featured_images = porto_get_featured_images();
 
@@ -87,11 +84,25 @@ require_once("functions-tvs-porto-child.php");
 
 											<?php
 
-											// gerek yok ??? 
+
 											if (is_sticky() && is_home() && !is_paged()) {
 												printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 											}
 											?>
+
+											<?php
+											$date = get_post_meta(get_the_ID(), 'tvsDebateMB_date', true);
+											$WpDateFormat = get_option('date_format');
+											$WpDateFormat = date($WpDateFormat, strtotime($date));
+											?>
+											<div class="datetime"><strong><?php echo $WpDateFormat ?></strong></div>
+
+
+											<?php
+											$motionPassed = get_post_meta(get_the_ID(), 'tvsDebateMB_motionPassed', true);
+											if ($motionPassed != ""): ?>
+												<strong>MOTION PASSED : </strong><?php echo $motionPassed ?> <br>
+											<?php endif ?>
 
 											<h2 class="entry-title"><a
 													href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
@@ -148,7 +159,7 @@ require_once("functions-tvs-porto-child.php");
 
 </div>
 
-<?php require_once("footerJs.php");  ?>
+<?php require_once("footerJs.php"); ?>
 
 <?php
 get_footer();

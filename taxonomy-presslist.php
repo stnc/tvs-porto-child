@@ -1,30 +1,31 @@
 <?php get_header();
-global  $porto_mobile_toggle;
+global $porto_mobile_toggle;
 $sticky_sidebar = porto_meta_sticky_sidebar();
 $sticky = "";
 if ($sticky_sidebar) {
 	$sticky = "data-plugin-sticky";
 }
 
-$mobile_sidebar = porto_get_meta_value( 'mobile_sidebar' );
-if ( 'yes' == $mobile_sidebar ) {
+$mobile_sidebar = porto_get_meta_value('mobile_sidebar');
+if ('yes' == $mobile_sidebar) {
 	$mobile_sidebar = true;
-} elseif ( 'no' == $mobile_sidebar ) {
+} elseif ('no' == $mobile_sidebar) {
 	$mobile_sidebar = false;
 } else {
-	$mobile_sidebar = ! empty( $porto_settings['show-mobile-sidebar'] ) ? true : false;
+	$mobile_sidebar = !empty($porto_settings['show-mobile-sidebar']) ? true : false;
 }
 
 ?>
 
 <div class="row">
-	<div class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo ! $mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+	<div
+		class="col-lg-3 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
 		<div class="pin-wrapper">
 			<div <?php echo $sticky ?>
 				data-plugin-options="<?php echo esc_attr('{"autoInit": true, "minWidth": 992, "containerSelector": ".main-content-wrap","autoFit":true, "paddingOffsetBottom": 10}'); ?>">
-				<?php if ( $mobile_sidebar && ( ! isset( $porto_mobile_toggle ) || false !== $porto_mobile_toggle ) ) : ?>
-			       <div class="sidebar-toggle"><i class="fa"></i></div>
-		        <?php endif; ?>
+				<?php if ($mobile_sidebar && (!isset($porto_mobile_toggle) || false !== $porto_mobile_toggle)): ?>
+					<div class="sidebar-toggle"><i class="fa"></i></div>
+				<?php endif; ?>
 				<div class="sidebar-content">
 					<div id="main-sidebar-menu" class="widget_sidebar_menu main-sidebar-menu">
 						<?php
@@ -106,12 +107,26 @@ if ( 'yes' == $mobile_sidebar ) {
 													<h2 class="entry-title"><a target="_blank"
 															href="<?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressUrl', true); ?>"><?php the_title(); ?></a>
 													</h2>
-													<strong><?php echo get_post_meta(get_the_ID(), 'tvsPressMB_pressPublication', true); ?></strong>
-													<br>
-													<strong><?php $date = get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true);
-													$new_date_format = wp_date('l, F j, Y', strtotime($date));
-													echo $new_date_format; ?></strong>
 
+
+													<?php
+													$date = get_post_meta(get_the_ID(), 'tvsPressMB_pressDate', true);
+													$WpDateFormat = get_option('date_format');
+													$WpDateFormat = wp_date($WpDateFormat, strtotime($date));
+													?>
+													<div class="datetime"><strong><?php echo $WpDateFormat ?></strong></div>
+
+
+													<?php
+													$pressPublication = get_post_meta(get_the_ID(), 'tvsPressMB_pressPublication', true);
+													if ($pressPublication != ""): ?>
+														<strong> <?php echo $pressPublication ?> </strong> <br>
+													<?php endif;
+
+
+													if (is_user_logged_in() && current_user_can("edit_post", get_the_ID())) {
+														edit_post_link("Edit");
+													} ?>
 													<?php
 													porto_render_rich_snippets(false);
 													if (!empty($porto_settings['blog-excerpt'])) {

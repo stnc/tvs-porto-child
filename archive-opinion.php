@@ -25,16 +25,10 @@ require_once("functions-tvs-porto-child.php");
 					$debate_count++;
 					the_post();
 					$depentPageID = get_post_meta(get_the_ID(), 'tvsDebateMB_opinion', true);
-	
-					
-					
-
 					?>
 					<div class="col-lg-12  col-md-12 custom-sm-margin-bottom-1 p-b-lg single-debate">
 						<?php
 
-						$opinionPage = get_post_meta($depentPageID, 'tvsDebateMB_opinion', true);
-						$transcriptPage = get_post_meta($depentPageID, 'tvsDebateMB_transcript', true);
 						global $porto_settings;
 
 						$post_layout = 'medium';
@@ -49,8 +43,8 @@ require_once("functions-tvs-porto-child.php");
 						$post_meta .= '<div class="post-meta ' . (empty($porto_settings['post-metas']) ? ' d-none' : '') . '">';
 
 						$post_meta .= '<ul class="buttons">';
-						$post_meta .=  '<li><a class="go" href="' . get_permalink() . '">Full Report</a></li>';
-					//	$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
+						$post_meta .= '<li><a class="go" href="' . get_permalink() . '">Full Report</a></li>';
+						//	$post_meta .= tvs_frontpage_metabox(get_the_ID(), $tvsDebate_usedAjax);
 						$post_meta .= '<li style="float:right"><span class="d-block float-sm-end mt-3 mt-sm-0"><a class="btn btn-xs btn-default text-xs text-uppercase" href="' . esc_url(apply_filters('the_permalink', get_permalink())) . '">' . esc_html__('Read more...', 'porto') . '</a></span></li>';
 						$post_meta .= '</ul>';
 						$post_meta .= '</div>';
@@ -84,12 +78,26 @@ require_once("functions-tvs-porto-child.php");
 
 
 											<?php
-
 											if (is_sticky() && is_home() && !is_paged()) {
 												printf('<span class="sticky-post">%s</span>', esc_html__('Featured', 'porto'));
 											}
 											?>
-											<div class="datetime"><strong><?php the_time( 'j F Y' ); ?></strong></div>
+
+											<?php
+											$date = get_post_meta($depentPageID, 'tvsDebateMB_date', true);
+											$WpDateFormat = get_option('date_format');
+											$WpDateFormat = date($WpDateFormat, strtotime($date));
+											?>
+											<div class="datetime"><strong><?php echo $WpDateFormat ?></strong></div>
+
+
+											<?php
+											$motionPassed = get_post_meta($depentPageID, 'tvsDebateMB_motionPassed', true);
+											if ($motionPassed != ""): ?>
+												<strong>MOTION PASSED : </strong><?php echo $motionPassed ?> <br>
+											<?php endif ?>
+
+
 											<h2 class="entry-title"><a
 													href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 
@@ -147,7 +155,7 @@ require_once("functions-tvs-porto-child.php");
 
 
 
-<?php require_once("footerJs.php");  ?>
+<?php require_once("footerJs.php"); ?>
 
 
 <?php

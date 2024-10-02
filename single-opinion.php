@@ -217,6 +217,21 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
           </div>
 
           <div class="col-lg-7">
+            
+            <?php
+            $date = get_post_meta($tvsDebateMB_relatedDebateID, 'tvsDebateMB_date', true);
+            $WpDateFormat = get_option('date_format');
+            $WpDateFormat = date($WpDateFormat, strtotime($date));
+            ?>
+            <div class="datetime"><strong><?php echo $WpDateFormat ?></strong></div>
+
+
+            <?php
+            $motionPassed = get_post_meta($tvsDebateMB_relatedDebateID, 'tvsDebateMB_motionPassed', true);
+            if ($motionPassed != ""): ?>
+              <strong>MOTION PASSED : </strong><?php echo $motionPassed ?> <br>
+            <?php endif ?>
+            
             <?php the_content(); ?>
             <?php if (is_user_logged_in() && current_user_can("edit_post", get_the_ID())) {
               edit_post_link("Edit");
