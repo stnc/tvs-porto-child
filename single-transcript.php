@@ -39,7 +39,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
       <div class="single-debate-content">
         <div class="row">
-          <div   class="col-lg-5 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+          <div   class="col-lg-4 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
 
             <?php
             $tvsDebateMB_relatedDebateID = get_post_meta($transcriptID, 'tvsDebateMB_relatedDebateID', true);
@@ -74,7 +74,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                     <div class="post-meta">
                       <ul class="buttons">
                           <li><a  href=" <?php echo get_permalink($tvsDebateMB_relatedDebateID)  ?>">Debate Page</a></li>
-                        <?php echo tvs_frontpage_metabox($tvsDebateMB_relatedDebateID, $tvsDebate_usedAjax); ?>
+                        <?php echo tvs_frontpage_metabox($tvsDebateMB_relatedDebateID, $tvsDebate_usedAjax,"transcript"); ?>
                       </ul>
                     </div>
                   <?php endif; ?>
@@ -214,7 +214,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
             </div>
           </div>
 
-          <div class="col-lg-7">
+          <div class="col-lg-8">
           <?php
             $date = get_post_meta($tvsDebateMB_relatedDebateID, 'tvsDebateMB_date', true);
             $WpDateFormat = get_option('date_format');

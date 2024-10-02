@@ -40,7 +40,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
       <div class="single-debate-content">
         <div class="row">
           <div
-            class="col-lg-5 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
+            class="col-lg-4 sidebar porto-alternative-default left-sidebar <?php echo !$mobile_sidebar ? '' : ' mobile-sidebar'; ?>">
 
 
             <div class="pin-wrapper">
@@ -240,7 +240,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
               </div>
             </div>
           </div>
-          <div class="col-lg-7">
+          <div class="col-lg-8">
       
 
 

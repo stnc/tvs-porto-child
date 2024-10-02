@@ -247,7 +247,7 @@ function tvs_speakersTheme_metabox($id)
 		echo ' </ul>';
 	endif;
 }
-function tvs_frontpage_metabox($id, $method)
+function tvs_frontpage_metabox($id, $method, $hide="all")
 {
 	$transcriptUrl = "";
 	$opinionUrl = "";
@@ -261,38 +261,47 @@ function tvs_frontpage_metabox($id, $method)
 	// 	echo "<pre>";
 //  var_dump(	$speaker_list_json);
 // print_r( $speaker_list_json["speaker"]);
-	if ($speaker_list_json[0]["speaker"] != "0") {
-		if ($method == "yes") {
-			 $speaker = '<li><a class="ajax-popup" href="'.  get_home_url().'/speakers?list=' . $id . '#tvs-modal" data-url="'.  get_home_url().'/speakersModal?list=' . $id . '#tvs-modal">Speakers</a></li>';
-			//$speaker = '<li><a class="ajax-popup"  href="/speakersModal?list=' . $id . '">Speakers</a></li>';
-		} else {
-			$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
+
+
+
+	if ($hide != "transcript") {
+		if ($transcriptPage != "0") {
+			if ($method == "yes") {
+				$transcriptUrl = '<li><a class="ajax-popup" href="' . get_permalink($transcriptPage) . '#tvs-modal" data-url="' . get_home_url() . '/transcriptModal?transcriptid=' . $transcriptPage . '#tvs-modal">Transcript</a></li>';
+				//	$transcriptUrl = '<li><a class="ajax-popup" href="/transcriptModal?transcriptid=' . $transcriptPage . '">Transcript</a></li>';
+
+			} else {
+				$transcriptUrl = '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
+
+			}
 		}
 	}
 
-	if ($transcriptPage != "0") {
-		if ($method == "yes") {
-			 $transcriptUrl = '<li><a class="ajax-popup" href="' . get_permalink($transcriptPage) . '#tvs-modal" data-url="'.  get_home_url().'/transcriptModal?transcriptid=' . $transcriptPage . '#tvs-modal">Transcript</a></li>';
-		//	$transcriptUrl = '<li><a class="ajax-popup" href="/transcriptModal?transcriptid=' . $transcriptPage . '">Transcript</a></li>';
+	if ($hide != "opinion") {
+		if ($opinionPage != "0") {
+			if ($method == "yes") {
+				$opinionUrl = '<li><a class="ajax-popup"  href="' . get_permalink($opinionPage) . '#tvs-modal"  data-url="' . get_home_url() . '/OpinionModal?opinionid=' . $opinionPage . '#tvs-modal">Opinion Poll</a></li>';
+				//$opinionUrl = '<li><a class="ajax-popup"  href="/OpinionModal?opinionid=' . $opinionPage . '">Transcript</a></li>';
 
-		} else {
-			$transcriptUrl = '<li><a  href="' . get_permalink($transcriptPage) . '">Transcript</a></li>';
+			} else {
+				$opinionUrl = '<li><a  href="' . get_permalink($opinionPage) . '">Opinion Poll</a></li>';
 
+			}
 		}
 	}
 
-	if ($opinionPage != "0") {
-		if ($method == "yes") {
-			$opinionUrl = '<li><a class="ajax-popup"  href="' . get_permalink($opinionPage) . '#tvs-modal"  data-url="'.  get_home_url().'/OpinionModal?opinionid=' . $opinionPage . '#tvs-modal">Opinion Poll</a></li>';
-			//$opinionUrl = '<li><a class="ajax-popup"  href="/OpinionModal?opinionid=' . $opinionPage . '">Transcript</a></li>';
-
-		} else {
-			$opinionUrl = '<li><a  href="' . get_permalink($opinionPage) . '">Opinion Poll</a></li>';
-
+	if ($hide != "speaker") {
+		if ($speaker_list_json[0]["speaker"] != "0") {
+			if ($method == "yes") {
+				$speaker = '<li><a class="ajax-popup" href="' . get_home_url() . '/speakers?list=' . $id . '#tvs-modal" data-url="' . get_home_url() . '/speakersModal?list=' . $id . '#tvs-modal">Speakers</a></li>';
+				//$speaker = '<li><a class="ajax-popup"  href="/speakersModal?list=' . $id . '">Speakers</a></li>';
+			} else {
+				$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
+			}
 		}
 	}
 
-	return $transcriptUrl . $speaker . $opinionUrl;
+	return $transcriptUrl .  $opinionUrl. $speaker ;
 
 }
 
