@@ -254,10 +254,18 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
 
             <?php
-            $motionPassed = get_post_meta(get_the_ID(), 'tvsDebateMB_motionPassed', true);
-            if ($motionPassed != ""): ?>
-              <strong>MOTION PASSED : </strong><?php echo $motionPassed ?> <br>
+            $tvsDebateMB_broadcast_date = get_post_meta(get_the_ID(), 'tvsDebateMB_broadcast_date', true);
+            if ($tvsDebateMB_broadcast_date != ""): ?>
+              <strong>Broadcast Date : </strong><?php echo $tvsDebateMB_broadcast_date ?> <br>
             <?php endif ?>
+
+
+            <?php
+            $tvsDebateMB_venue = get_post_meta(get_the_ID(), 'tvsDebateMB_venue', true);
+            if ($tvsDebateMB_venue != ""): ?>
+              <strong>Venue  : </strong><?php echo $tvsDebateMB_venue ?> <br>
+            <?php endif ?>
+
 
 
             <?php the_content(); ?>
