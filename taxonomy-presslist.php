@@ -48,7 +48,7 @@ if ('yes' == $mobile_sidebar) {
 	<div class="col-lg-9 main-content">
 		<div id="content" role="main">
 			<?php if (category_description()): ?>
-				<div class="page-content">
+				<div class="page-content row debate-row archive-debate-row  cat-stnc">
 					<?php echo category_description(); ?>
 				</div>
 			<?php endif; ?>

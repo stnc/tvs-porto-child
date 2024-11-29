@@ -97,7 +97,8 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
 
 
-                  <?php if ($tvsDebateMB_relatedDebateID != "0"): ?>
+                  <?php 
+                  if ($tvsDebateMB_relatedDebateID != "0"): ?>
                     <?php
                     $tvsDebateCommonSettings = get_option('tvsDebate_CommonSettings');
                     $tvsDebateShowVideoSpeaker = $tvsDebateCommonSettings["ShowVideoSpeakerForTranscript"];
@@ -161,6 +162,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                 <div class="accordion-body">
                                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
                                     <?php
+                                    if (!empty($json_video_list)) :
                                     foreach ($json_video_list as $key => $video):
                                       $src = wp_get_attachment_image_src($video["youtubePicture"], 'thumbnail', false, '');
                                       ?>
@@ -196,7 +198,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                         </div>
 
                                       </div>
-                                    <?php endforeach;
+                                    <?php endforeach; endif;
                                     ?>
                                   </div>
 

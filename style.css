@@ -4,7 +4,7 @@ Theme URI: https://www.portotheme.com/wordpress/porto
 Author: P-THEMES
 Author URI: https://www.portotheme.com/
 Description: Porto Responsive WordPress + eCommerce Theme.
-Version: 1.2
+Version: 1.2.33
 Template: porto
 License: Commercial
 License URI: http://themeforest.net/licenses/regular_extended
@@ -349,4 +349,42 @@ a.go {
   background-color: #0C6291 !important;
   padding: 7px;
   margin-bottom: 10px;
+}
+
+/* category pages top */
+
+.cat-stnc a{
+
+    color: #972b2b;
+  
+}
+.cat-stnc h2{
+  font-size: 1.3em;
+  font-family: Georgia,times new roman,Times,serif;
+  color: #000;
+  margin: 0;
+  padding: 0;
+  font-weight: 700;
+}
+
+
+.cat-stnc{
+  margin-bottom: 4px!important;
+  padding: 10px!important;
+  /* margin-top: calc(var(--bs-gutter-y) * -1)!important;
+  margin-right: calc(var(--bs-gutter-x) / -2)!important;
+  margin-left: calc(var(--bs-gutter-x) / -2)!important; */
+  background-color: #ccc;
+  background-image: none;
+  color: #000;
+  border: solid 1px #999;
+}
+
+.mobile-toggle .fa-solid, .fas {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+#header .mobile-toggle {
+  font-size: inherit!important;
 }

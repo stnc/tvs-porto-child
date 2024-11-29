@@ -291,7 +291,8 @@ function tvs_frontpage_metabox($id, $method, $hide="none")
 	}
 
 	if ($hide != "speaker") {
-		if ($speaker_list_json[0]["speaker"] != "0") {
+		if (!empty($speaker_list_json)) {
+		if ($speaker_list_json[0]["speaker"] != "0" || !empty($speaker_list_json)) {
 			if ($method == "yes") {
 				$speaker = '<li><a class="ajax-popup" href="' . get_home_url() . '/speakers?list=' . $id . '#tvs-modal" data-url="' . get_home_url() . '/speakersModal?list=' . $id . '#tvs-modal">Speakers</a></li>';
 				//$speaker = '<li><a class="ajax-popup"  href="/speakersModal?list=' . $id . '">Speakers</a></li>';
@@ -299,6 +300,7 @@ function tvs_frontpage_metabox($id, $method, $hide="none")
 				$speaker = '<li><a href="/speakers?list=' . $id . '">Speakers</a></li>';
 			}
 		}
+	}
 	}
 
 	return $transcriptUrl .  $opinionUrl. $speaker ;
@@ -343,7 +345,7 @@ function tvs_videoTheme_metabox($count, $id): void
 									<div class="text-center">
 
 										<iframe width="600" height="400"
-											src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1  "
+											src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=0  "
 											title="YouTube video player" frameborder="0"
 											allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 											referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

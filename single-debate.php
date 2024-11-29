@@ -98,6 +98,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
                   <?php
                   $tvsDebateCommonSettings = get_option('tvsDebate_spdSettings');
+                  if (!empty($tvsDebateCommonSettings)) :
                   $tvsDebateShowRelatedCategory = $tvsDebateCommonSettings["tvsDebate_ShowRelatedCategory"];
                   if ($tvsDebateShowRelatedCategory == "yes"):
                     ?>
@@ -125,6 +126,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                       <?php endforeach ?>
                     </ul>
                     <!-- RelatedCategories ends-->
+                  <?php endif ?>
                   <?php endif ?>
 
 
@@ -209,7 +211,7 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
                                         <div class="text-center">
 
                                           <iframe width="600" height="400"
-                                            src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=1"
+                                            src="https://www.youtube.com/embed/<?php echo $video["youtube_link"] ?>?autoplay=0&mute=0"
                                             title="YouTube video player" frameborder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                             referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -254,10 +256,18 @@ if ($builder_id && 'publish' == get_post_status($builder_id)) {
 
 
             <?php
-            $motionPassed = get_post_meta(get_the_ID(), 'tvsDebateMB_motionPassed', true);
-            if ($motionPassed != ""): ?>
-              <strong>MOTION PASSED : </strong><?php echo $motionPassed ?> <br>
+            $tvsDebateMB_broadcast_date = get_post_meta(get_the_ID(), 'tvsDebateMB_broadcast_date', true);
+            if ($tvsDebateMB_broadcast_date != ""): ?>
+              <strong>Broadcast Date : </strong><?php echo $tvsDebateMB_broadcast_date ?> <br>
             <?php endif ?>
+
+
+            <?php
+            $tvsDebateMB_venue = get_post_meta(get_the_ID(), 'tvsDebateMB_venue', true);
+            if ($tvsDebateMB_venue != ""): ?>
+              <strong>Venue  : </strong><?php echo $tvsDebateMB_venue ?> <br>
+            <?php endif ?>
+
 
 
             <?php the_content(); ?>
